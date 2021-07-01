@@ -1,0 +1,18 @@
+body { font-family:Helvetica, Arial, sans-serif; font-size:24px; }
+ #time {
+  font-size: 24px;
+}
+input[type="text"]
+{
+    font-size:24px;
+}
+
+a {
+  color: blue;
+}
+
+.myDiv {
+  border: 5px outset red;
+  background-color: lightblue;
+  text-align: center;
+}
