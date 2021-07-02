@@ -62,17 +62,25 @@ var stard;
   totss4=Math.floor((((tot4%60)%1)*1000));
   //totms=Math.floor(tot/60)+0.1*(tot%60);
   for (var i = 0; i < barr.length; i++) {
+
 findTime(tot,totss,'time');
-if ((parseFloat(barr[i].value))<5)
-{
-//window.alert(tot2);
-//window.alert(tot4);
 findTime(tot2,totss2,'time2');
 findTime(tot3,totss3,'time3');
 findTime(tot4,totss4,'time4');
+if ((parseFloat(barr[i].value))<5)
+{
+document.getElementById("time2").style.visibility = "visible"; 
+document.getElementById("time3").style.visibility = "visible"; 
+document.getElementById("time4").style.visibility = "visible"; 
 }
 
 
+if ((parseFloat(barr[i].value))==5)
+{
+document.getElementById("time2").style.visibility = "hidden";
+document.getElementById("time3").style.visibility = "hidden";
+document.getElementById("time4").style.visibility = "hidden";
+}
 
 }
 }
