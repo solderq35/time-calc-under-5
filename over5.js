@@ -68,8 +68,8 @@ function findTotal()
 			findTime(seconds_input_array[l],ms_input_array[l],output_div_array[l]);
 		}
 
-		/* Only show the possible calculated solution that is the same or 1 second more (due to possible rounding errors) 
-		than the time shown on rating screen */
+		/* Only show the possible calculated solution that is the same or 1 second more
+		than the time shown on rating screen (due to possible rounding errors)  */
 		for (var n =0; n <= 19; n++)
 		{
 			if (((Math.floor(parseFloat((minutes_array[i].value)))*60)+parseFloat(seconds_array[i].value)==((Math.floor(seconds_input_array[n])/1)-1)) || ((Math.floor(parseFloat((minutes_array[i].value)))*60)+parseFloat(seconds_array[i].value)==((Math.floor(seconds_input_array[n])/1))) || ((Math.floor(parseFloat((minutes_array[i].value)))*60)+parseFloat(seconds_array[i].value)>0))
@@ -78,8 +78,8 @@ function findTotal()
 			}
 		}
 		
-		/* Do not show the possible calculated solutions that are less than or 2 seconds or more than the time shown on rating
-		screeen (due to possible rounding errors)*/
+		/* Do not show the possible calculated solutions that are either less than the time shown on rating
+		screeen, or at least 2 seconds more than the time shown on rating screen (due to possible rounding errors)*/
 		for (var o =0; o <= 19; o++)
 		{
 			if (((Math.floor(parseFloat((minutes_array[i].value)))*60)+parseFloat(seconds_array[i].value)<((Math.floor(seconds_input_array[o]))/1)-1) || ((Math.floor(parseFloat((minutes_array[i].value)))*60)+parseFloat(seconds_array[i].value)> ((Math.floor(seconds_input_array[o]))/1)) || ((Math.floor(parseFloat((minutes_array[i].value)))*60)+parseFloat(seconds_array[i].value)<=0))
