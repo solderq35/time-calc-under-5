@@ -66,10 +66,16 @@
 			</h3>
 			<p>The full mathematical formula for calculating in game time from score, for runs of less than 5 minutes in-game time, is:
 			<br> 
+			<br>
 			<b>(210,000 - (N * 100,000 / M)) * (3 / 400)</b>
 			<br>
-			Where N = The Score shown on screen, and M = The Bonuses and Penalties
-			added up. Each Silent Assassin Bonus (Objectives Complete, Never Spotted, No Noticed Kills, No Bodies Found, No Recordings) is 20k points towards the M value, while each nontarget kill is -5k points 
+			<br> 
+			Let N = The Score shown on screen
+			<br>
+			Let M = The Bonuses and Penalties added up. 
+			<br> 
+			<br>
+			Each Silent Assassin Bonus (Objectives Complete, Never Spotted, No Noticed Kills, No Bodies Found, No Recordings) is 20k points towards the M value, while each nontarget kill is -5k points 
 			towards the M value. Note that the Time Bonus does not count towards the M value. The maximum M value is 100,000.
 			<br>
 			<br>	
@@ -82,9 +88,9 @@
 			is closest to the time shown on the rating screen is displayed to the user.
 			<br>
 			<br>
-			Any time decimal values smaller than 0.001 seconds are rounded down. In addition, in some rare cases, the rating 
-			screen time does not match the calculated decimal time rounded down to the nearest second. These can be manually 
-			rounded to the next fastest second as needed for leaderboard purposes.
+			Any decimal values smaller than 0.001 seconds in the final result are rounded down. In addition, in some rare 
+			cases, the rating screen time does not match the calculated decimal time rounded down to the nearest second. These
+			can be manually rounded to the next fastest second as needed for leaderboard purposes.
 			<br>
 			<br>
 			The codebase for this site is maintained here: 
