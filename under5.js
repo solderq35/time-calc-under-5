@@ -1,86 +1,91 @@
-function findTime(tot,totss,x)
+function findTime(seconds_input,ms_input,output_div)
 {
-  if ((((tot % 60)) > 10 ) && (totss<100) && totss >=10){
-document.getElementById(x).innerHTML = Math.floor(tot / 60) + ":" + Math.floor((tot % 60) / 1) + ":" + "0" + totss;
-  }
-  if ((((tot % 60)) < 10 ) && (totss<100) && totss >=10){
-document.getElementById(x).innerHTML = Math.floor(tot / 60) + ":" + "0" + Math.floor((tot % 60) / 1) + ":" + "0" + totss;
-  }
-    if ((((tot % 60)) > 10 ) && (totss<10)){
-document.getElementById(x).innerHTML = Math.floor(tot / 60) + ":" + Math.floor((tot % 60) / 1) + ":" + "0" + "0" + totss;
-  }
-    if ((((tot % 60)) < 10 ) && (totss<10)){
-document.getElementById(x).innerHTML = Math.floor(tot / 60) + ":" + "0" + Math.floor((tot % 60) / 1) + ":" + "0" + "0" + totss;
-  }
-    if ((((tot % 60)) > 10 ) && (totss>=100)){
-document.getElementById(x).innerHTML = Math.floor(tot / 60) + ":" + Math.floor((tot % 60) / 1) + ":" + totss;
-  }
-    if ((((tot % 60)) < 10 ) && (totss>=100)){
-document.getElementById(x).innerHTML = Math.floor(tot / 60) + ":" + "0" + Math.floor((tot % 60) / 1) + ":" + totss;
-  }
+	/*This function reformats the raw time inputs into minutes:seconds:milliseconds form, before printing the results
+	to the screen.*/
+	
+	if ((((seconds_input % 60)) > 10 ) && (ms_input<100) && ms_input >=10)
+	{
+		document.getElementById(output_div).innerHTML = Math.floor(seconds_input / 60) + ":" + Math.floor((seconds_input % 60) / 1) + ":" + "0" + ms_input;
+	}
+	if ((((seconds_input % 60)) < 10 ) && (ms_input<100) && ms_input >=10)
+	{
+		document.getElementById(output_div).innerHTML = Math.floor(seconds_input / 60) + ":" + "0" + Math.floor((seconds_input % 60) / 1) + ":" + "0" + ms_input;
+	}
+    if ((((seconds_input % 60)) > 10 ) && (ms_input<10)){
+		document.getElementById(output_div).innerHTML = Math.floor(seconds_input / 60) + ":" + Math.floor((seconds_input % 60) / 1) + ":" + "0" + "0" + ms_input;
+	}
+    if ((((seconds_input % 60)) < 10 ) && (ms_input<10)){
+		document.getElementById(output_div).innerHTML = Math.floor(seconds_input / 60) + ":" + "0" + Math.floor((seconds_input % 60) / 1) + ":" + "0" + "0" + ms_input;
+	}
+    if ((((seconds_input % 60)) > 10 ) && (ms_input>=100)){
+		document.getElementById(output_div).innerHTML = Math.floor(seconds_input / 60) + ":" + Math.floor((seconds_input % 60) / 1) + ":" + ms_input;
+	}
+    if ((((seconds_input % 60)) < 10 ) && (ms_input>=100)){
+		document.getElementById(output_div).innerHTML = Math.floor(seconds_input / 60) + ":" + "0" + Math.floor((seconds_input % 60) / 1) + ":" + ms_input;
+	}
 }
 
 
 
-function findTotal() {
-  var arr = document.getElementsByClassName('amount');
-  var barr = document.getElementsByClassName('stars');
-  var tot = 0;
-  var tot2=0;
-  var tot3=0;
-  var tot4=0;
-  var totms = 0;
-var totss=0;
-var totss2=0;
-var totss3=0;
-var totss4=0;
-var stard;
-
-  for (var i = 0; i < arr.length; i++) {
-    if (parseFloat(arr[i].value))
-      tot = (210000 - ((parseFloat(arr[i].value)) * (100000 / ((parseFloat(barr[i].value))*20000)))) * (3 / 400);
-  }
-  
-
-  for (var i = 0; i < arr.length; i++) {
-    if (parseFloat(arr[i].value))
-      tot2 = (210000 - ((parseFloat(arr[i].value)) * (100000 / (((parseFloat(barr[i].value))*20000)+5000)))) * (3 / 400);
-  }
-  
-    for (var i = 0; i < arr.length; i++) {
-    if (parseFloat(arr[i].value))
-      tot3 = (210000 - ((parseFloat(arr[i].value)) * (100000 / (((parseFloat(barr[i].value))*20000)+10000)))) * (3 / 400);
-  }
-    for (var i = 0; i < arr.length; i++) {
-    if (parseFloat(arr[i].value))
-      tot4 = (210000 - ((parseFloat(arr[i].value)) * (100000 / (((parseFloat(barr[i].value))*20000)+15000)))) * (3 / 400);
-  }
-  document.getElementById('totalordercost').value = tot;
-  totss=Math.floor((((tot%60)%1)*1000));
-  totss2=Math.floor((((tot2%60)%1)*1000));
-  totss3=Math.floor((((tot3%60)%1)*1000));
-  totss4=Math.floor((((tot4%60)%1)*1000));
-  //totms=Math.floor(tot/60)+0.1*(tot%60);
-  for (var i = 0; i < barr.length; i++) {
-
-findTime(tot,totss,'time');
-findTime(tot2,totss2,'time2');
-findTime(tot3,totss3,'time3');
-findTime(tot4,totss4,'time4');
-if ((parseFloat(barr[i].value))<5)
+function findTotal() 
 {
-document.getElementById("time2").style.visibility = "visible"; 
-document.getElementById("time3").style.visibility = "visible"; 
-document.getElementById("time4").style.visibility = "visible"; 
-}
+	/*This function is the overarching function that sets up input/ output arrays, and determines which solutions to show.*/
+	
+	var score_array = document.getElementsByClassName('score');
+	var minutes_array = document.getElementsByClassName('minutes');
+	var seconds_array = document.getElementsByClassName('seconds');
+	var seconds_input = 0;
+	var ms_input=0; // milliseconds output
+	var seconds_input_array = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+	var output_div_array = ["time", "time2", "time3", "time4", "time5", "time6", "time7", "time8", "time9", "time10", "time11", "time12", "time13", "time14", "time15", "time16", "time17", "time18", "time19", "time20"];
+	var ms_input_array = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+	
+	// This for loop generates an array of the possible seconds input values
+	for (var k=0; k <= 19; k++)
+	{
+		for (var i = 0; i < score_array.length; i++) 
+		{
+			if (parseFloat(score_array[i].value))
+			{
+				
+				seconds_input_array[k] = (210000 - ((parseFloat(score_array[i].value)) * (100000 / parseFloat(5000*(k+1))))) * (3 / 400);
+			}
+		}
+	}
 
+	// This for loop generates an array of the possible millisecond input values
+	document.getElementById('totalordercost').value = seconds_input;
+	for (var m =0; m <= 19; m++)
+	{
+		ms_input_array[m]=Math.floor((((seconds_input_array[m]%60)%1)*1000));
+	}
+	
+	for (var i = 0; i < minutes_array.length; i++)
+	{
+		// For loop to call the findTime function for all possible inputs.
+		for (var l = 0; l <= 19; l++)
+		{
+			findTime(seconds_input_array[l],ms_input_array[l],output_div_array[l]);
+		}
 
-if ((parseFloat(barr[i].value))==5)
-{
-document.getElementById("time2").style.visibility = "hidden";
-document.getElementById("time3").style.visibility = "hidden";
-document.getElementById("time4").style.visibility = "hidden";
-}
-
-}
+		/* Only show the possible calculated solution that is the same or 1 second more (due to possible rounding errors) 
+		than the time shown on rating screen */
+		for (var n =0; n <= 19; n++)
+		{
+			if (((Math.floor(parseFloat((minutes_array[i].value)))*60)+parseFloat(seconds_array[i].value)==((Math.floor(seconds_input_array[n])/1)-1)) || ((Math.floor(parseFloat((minutes_array[i].value)))*60)+parseFloat(seconds_array[i].value)==((Math.floor(seconds_input_array[n])/1))) || ((Math.floor(parseFloat((minutes_array[i].value)))*60)+parseFloat(seconds_array[i].value)>0))
+			{
+				document.getElementById(output_div_array[n]).style.display = "block"; 
+			}
+		}
+		
+		/* Do not show the possible calculated solutions that are less than or 2 seconds or more than the time shown on rating
+		screeen (due to possible rounding errors)*/
+		for (var o =0; o <= 19; o++)
+		{
+			if (((Math.floor(parseFloat((minutes_array[i].value)))*60)+parseFloat(seconds_array[i].value)<((Math.floor(seconds_input_array[o]))/1)-1) || ((Math.floor(parseFloat((minutes_array[i].value)))*60)+parseFloat(seconds_array[i].value)> ((Math.floor(seconds_input_array[o]))/1)) || ((Math.floor(parseFloat((minutes_array[i].value)))*60)+parseFloat(seconds_array[i].value)<=0))
+			{
+				document.getElementById(output_div_array[o]).style.display = "none";
+			}
+		}
+	}
 }

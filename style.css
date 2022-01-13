@@ -1,0 +1,79 @@
+body { 
+font-family:Helvetica, Arial, sans-serif; font-size:24px; 
+}
+
+input[type="text"]
+{
+    font-size:24px;
+}
+
+a {
+  color: blue;
+}
+
+.BioDiv {
+   border-color: red;
+  border-width: 8px;
+  border-style: outset;
+  background-color: lightblue;
+  text-align: center;
+}
+
+.amount{
+width: 85px;
+text-align:center;
+}
+
+.minutes{
+width: 40px;
+text-align:center;
+}
+.seconds{
+width: 40px;
+text-align:center;
+}
+
+.p1{
+font-size:30px;
+}
+
+.p2{
+font-size:20px;
+font-weight:normal
+}
+
+.p3{
+font-size:25px;
+font-weight:normal
+}
+
+.h_custom{
+font-size: 40px;
+}
+
+.collapsible {
+  border-color: red;
+  border-width: 8px;
+  border-style: outset outset none outset;
+  background-color: lightblue;
+
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+
+  text-align: center;
+
+  font-size: 30px;
+
+}
+
+.active, .collapsible:hover {
+
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}

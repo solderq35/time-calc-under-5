@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="style.css">
+		<script src="under5.js"></script>
+	</head>
+	<body>
+	
+		<title>Score to Time HITMAN Time Calculator (Under 5 Minutes)</title>
+		<div class ="test">
+			<h2 class = "h_custom">Score to Time HITMAN Time Calculator (Under 5 Minutes)</h2>
+			<p>
+				<strong  class = "p1">Score on Rating Screen</strong>
+			<br />
+			<b class= "p2">
+				Calculation will not work if score is 0.</b>
+			<br>
+			<input onkeyup="findTotal()" type="text" class="score" name="printcost" /></p>
+			<p>
+				<strong class = "p1">Time Shown on Rating Screen (minutes:seconds)</strong>
+			<br>
+			<b class= "p2"> 
+				If either the minutes or seconds is zero, leave a "0" in that input field. 
+			</b>
+			<br>
+			<input onkeyup="findTotal()" type="text" class="minutes" name="timeminutes" value=0>m   	
+			<input onkeyup="findTotal()" type="text" class="seconds" name="timeseconds" value=0>s</p>
+     
+		</div>
+		<div id="totalordercost">  </div>
+		<div id="totalordercost2">  </div>
+			<p>
+				<strong class = "p1">Time Calculation (minutes:seconds:milliseconds) </strong>       
+			<br>
+			<b class= "p2"> 
+				In some cases the calculated result may be 1 second slower than what is shown on rating screen. </b>
+			<br>
+			<b class= "p2"> 
+				If this happens, the time may be rounded to the next fastest second for leaderboard purposes. </p>
+			</p>             
+			<div id="time" class= "p3">  </div>
+			<div id = "time2" class= "p3"> </div>
+			<div id = "time3" class= "p3"> </div>
+			<div id = "time4" class= "p3"> </div>
+			<div id = "time5" class= "p3"> </div>
+			<div id = "time6" class= "p3"> </div>
+			<div id = "time7" class= "p3"> </div>
+			<div id = "time8" class= "p3"> </div>
+			<div id = "time9" class= "p3"> </div>
+			<div id = "time10" class= "p3"> </div>
+			<div id = "time11" class= "p3"> </div>
+			<div id = "time12" class= "p3"> </div>
+			<div id = "time13" class= "p3"> </div>
+			<div id = "time14" class= "p3"> </div>
+			<div id = "time15" class= "p3"> </div>
+			<div id = "time16" class= "p3"> </div>
+			<div id = "time17" class= "p3"> </div>
+			<div id = "time18" class= "p3"> </div>
+			<div id = "time19" class= "p3"> </div>
+			<div id = "time20" class= "p3"> </div>
+				
+
+	<button type="button" class="collapsible">More Info on Time Calculation (Click to Expand)</button>
+		<div class="content">
+			<h3>
+			Mathematics/ Code Explanation
+			</h3>
+			<p>The full mathematical formula for calculating in game time from score, for runs of less than 5 minutes in-game time, is:
+			<br> 
+			<b>(210,000 - (N * 100,000 / M)) * (3 / 400)</b>
+			<br>
+			Where N = The Score shown on screen, and M = The Bonuses and Penalties
+			added up. Each Silent Assassin Bonus is 20k points towards the M value, while each nontarget kill is -5k points 
+			towards the M value. Note that the Time Bonus does not count towards the M value
+			<br>
+			<br>	
+			<a href="https://media.discordapp.net/attachments/833505136290299935/931056141272764516/unknown.png" target= blank>
+			Refer to this reference image of Detailed Score (press P on a Hitman mission rating screen to get to this menu)</a>
+			<br>
+			<br>
+			Since most players do not show Detailed Score Menu in their run submissions, this site runs a script to account for
+			all 20 possible M values, and calculates 20 possible decimal times as a result. The user is asked to report the the time shown on the rating screen (which rounds down to the nearest second). The calculated decimal time that
+			is closest to the time shown on the rating screen is displayed to the user.
+			<br>
+			<br>
+			Any time decimal values smaller than 0.001 seconds are rounded down. In addition, in some rare cases, the rating 
+			screen time does not match the calculated decimal time rounded down to the nearest second. These can be manually 
+			rounded to the next fastest second as needed for leaderboard purposes.
+			<br>
+			<br>
+			The codebase for this site is maintained here: 
+				<a href="https://github.com/solderq35/hitman-time-calc" target = 
+					blank>https://github.com/solderq35/hitman-time-calc</a>
+			<h3> 
+			Usage Quirks
+			</h3>
+			As mentioned above, this formula does not work when the score is 0. The score can become 0 either due to:
+			<ul>
+				<li>Failing all 5 Silent Assassin requirements (Never Spotted, No Noticed Kills, No Bodies Found, No Recordings)</li>
+				<li>Killing too many nontargets (each nontarget kill is -5k in the Bonuses and Penalties (M) score)</li>
+				<li>Finishing the mission in less than 7 seconds (IOI's "anticheat", currently this only applies to Dubai any% in terms of main missions)</li>
+			</ul>
+			
+			</p>
+</div>
+				
+			<div class="BioDiv">
+				<p>
+					<a href="https://solderq35.github.io/hitman-time-calc/over5" target=blank class= "p1">Calculator for levels from 5 to 15 minutes</a>
+				<br>  	
+				<br>
+				<b class= "p3">
+					Code by Solderq35
+				</b>
+				</p>
+			</div>
+			
+
+
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>
+
+	</body>
+</html>
