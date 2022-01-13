@@ -52,11 +52,11 @@ font-size: 40px;
 }
 
 .collapsible {
+	
   border-color: red;
   border-width: 8px;
   border-style: outset outset none outset;
   background-color: lightblue;
-
   cursor: pointer;
   padding: 18px;
   width: 100%;
