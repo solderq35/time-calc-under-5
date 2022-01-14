@@ -42,25 +42,33 @@ function findTotal()
   for (var i = 0; i < scoreover5.length; i++) 
   {
 		if (parseFloat(scoreover5[i].value))
-			seconds_input2 = (210000 - ((parseFloat(scoreover5[i].value)) * (100000 / ((100000))))) * (3 / 400);
+			seconds_input2 = (175000 - ((parseFloat(scoreover5[i].value)) * (100000 / ((100000))))) * (3 / 50);
   }
   
    
   document.getElementById('totalordercost').value = seconds_input;
   ms_input=Math.floor((((seconds_input%60)%1)*1000));
   ms_input2=Math.floor((((seconds_input2%60)%1)*1000));
-  //totms=Math.floor(seconds_input/60)+0.1*(seconds_input%60);
-  for (var i = 0; i < scoreover5.length; i++) 
+
+  for (var i = 0; i < scoreunder5.length; i++) 
   {
-		if ((parseFloat(scoreunder5[i].value))>0)
-		{
+	  		if (seconds_input > 0)
+			{
+			document.getElementById('time').style.display = "block";
 			findTime(seconds_input,ms_input,'time');
-		}
-
-		if ((parseFloat(scoreover5[i].value))>0)
-		{
+			}
+			if (seconds_input2 > 0)
+			{
+			document.getElementById('time2').style.display = "block";
 			findTime(seconds_input2,ms_input2,'time2');
-		}
-
+			}
+			if (seconds_input <= 0)
+			{
+				document.getElementById('time').style.display = "none";
+			}
+			if (seconds_input2 <= 0)
+			{
+				document.getElementById('time2').style.display = "none";
+			}
 	}
 }
