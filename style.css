@@ -34,7 +34,7 @@ text-align:center;
 }
 
 .p1{
-font-size:30px;
+font-size:25px;
 }
 
 .p2{
@@ -48,7 +48,7 @@ font-weight:normal
 }
 
 .h_custom{
-font-size: 40px;
+font-size: 35px;
 }
 
 .collapsible {
@@ -72,7 +72,7 @@ font-size: 40px;
 }
 
 .content {
-	font-size: 20px;
+  font-size: 20px;
   padding: 0 18px;
   display: none;
   overflow: hidden;
