@@ -5,9 +5,9 @@
 		<script src="under5.js"></script>
 	</head>
 	<body>
-		<title>Score to Time HITMAN Time Calculator (Under 5 Minutes)</title>
+		<title>HITMAN Score to Time Calculator (Under 5 minutes)</title>
 		<div class ="test">
-			<h2 class = "h_custom">Score to Time HITMAN Time Calculator (Under 5 Minutes)</h2>
+			<h2 class = "h_custom">HITMAN Score to Time Calculator (Under 5 minutes)</h2>
 			<p>
 				<strong  class = "p1">Score on Rating Screen</strong>
 			<br />
@@ -70,6 +70,12 @@
 			<b>(210,000 - (N * 100,000 / M)) * (3 / 400)</b>
 			<br>
 			<br> 
+			The full mathematical formula for calculating in game time from score, for runs of 5 to 15 minutes, is:
+			<br> 
+			<br>
+			<b>(175,000 - (N * 100,000 / M)) * (3 / 50)</b>
+			<br>
+			<br>
 			Let N = The Score shown on screen
 			<br>
 			Let M = The Bonuses and Penalties added up. 
@@ -106,12 +112,15 @@
 			</ul>
 			
 			</p>
-</div>
+			</div>
 				
 			<div class="BioDiv">
 				<p>
-					<a href="https://solderq35.github.io/time-calc-under-5/over5" class= "p1">Calculator for levels from 5 to 15 minutes</a>
+				<a href="https://solderq35.github.io/time-calc-under-5/over5" class= "p1">Calculator for runs of 5 to 15 minutes</a>
 				<br>  	
+				<br>
+				<a href="https://solderq35.github.io/time-calc-under-5/sa" class= "p1">Calculator for just SA runs (Less Inputs Needed)</a>
+				<br>
 				<br>
 				<b class= "p3">
 					Code by Solderq35
@@ -121,21 +130,25 @@
 			
 
 
-<script>
-var coll = document.getElementsByClassName("collapsible");
-var i;
+	<script>
+	var coll = document.getElementsByClassName("collapsible");
+	var i;
 
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
-  });
-}
-</script>
+	for (i = 0; i < coll.length; i++) 
+	{
+		coll[i].addEventListener("click", function() {
+		this.classList.toggle("active");
+		var content = this.nextElementSibling;
+		if (content.style.display === "block") 
+		{
+			content.style.display = "none";
+		} 
+		else 
+		{
+		content.style.display = "block";
+		}
+	});
+	}
+	</script>
 	</body>
 </html>

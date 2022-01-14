@@ -1,64 +1,41 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<link rel="stylesheet" href="style.css">
-		<script src="over5.js"></script>
-	</head>
-	<body>
-	
-		<title>HITMAN Score to Time Calculator (5 to 15 minutes)</title>	
-		<div class ="test">
-			<h2 class = "h_custom">HITMAN Score to Time Calculator (5 to 15 minutes)</h2>
-			<p>
-				<strong  class = "p1">Score on Rating Screen</strong>
-			<br />
-			<b class= "p2">
-				Calculation will not work if score is 0.</b>
-			<br>
-			<input onkeyup="findTotal()" type="text" class="score" name="printcost" /></p>
-			<p>
-				<strong class = "p1">Time Shown on Rating Screen (minutes:seconds)</strong>
-			<br>
-			<b class= "p2"> 
-				If either the minutes or seconds is zero, leave a "0" in that input field. 
-			</b>
-			<br>
-			<input onkeyup="findTotal()" type="text" class="minutes" name="timeminutes" value=0>m   	
-			<input onkeyup="findTotal()" type="text" class="seconds" name="timeseconds" value=0>s</p>
+<head>
+<link rel="stylesheet" href="style.css">
+<script src="sa.js"></script>
+</head>
+<body>
+<title> HITMAN Score to Time Calculator (SA Runs Only)
+  </title>
+
+ <div>
+     <h2 class = "h_custom">HITMAN Score to Time Calculator (SA Runs Only)</h2>
      
-		</div>
-		<div id="totalordercost">  </div>
-		<div id="totalordercost2">  </div>
-			<p>
-				<strong class = "p1">Time Calculation (minutes:seconds:milliseconds) </strong>       
-			<br>
-			<b class= "p2"> 
-				In some cases the calculated result may be 1 second slower than what is shown on rating screen. </b>
-			<br>
-			<b class= "p2"> 
-				If this happens, the time may be rounded to the next fastest second for leaderboard purposes. </p>
-			</p>             
-			<div id="time" class= "p3">  </div>
-			<div id = "time2" class= "p3"> </div>
-			<div id = "time3" class= "p3"> </div>
-			<div id = "time4" class= "p3"> </div>
-			<div id = "time5" class= "p3"> </div>
-			<div id = "time6" class= "p3"> </div>
-			<div id = "time7" class= "p3"> </div>
-			<div id = "time8" class= "p3"> </div>
-			<div id = "time9" class= "p3"> </div>
-			<div id = "time10" class= "p3"> </div>
-			<div id = "time11" class= "p3"> </div>
-			<div id = "time12" class= "p3"> </div>
-			<div id = "time13" class= "p3"> </div>
-			<div id = "time14" class= "p3"> </div>
-			<div id = "time15" class= "p3"> </div>
-			<div id = "time16" class= "p3"> </div>
-			<div id = "time17" class= "p3"> </div>
-			<div id = "time18" class= "p3"> </div>
-			<div id = "time19" class= "p3"> </div>
-			<div id = "time20" class= "p3"> </div>
-				
+     <p><strong class = "p1">Score on Rating Screen (under 5 minutes)</strong><br />
+          <input onkeyup="findTotal()" type="text" class="scoreunder5" name="printcost" /></p>
+     
+     <p><strong class = "p1">Score on Rating Screen (5 to 15 minutes) </strong>
+<br>
+
+
+          <input onkeyup="findTotal()" type="text" class="scoreover5" name="digitalcost"></p>
+     
+      </div>
+           <div id="totalordercost">  </div>
+           <div id="totalordercost2">  </div>
+
+  <p><strong class = "p1">Time Calculation for Under 5 Minutes (minutes:seconds:milliseconds) </strong>       
+<br>
+</p>             
+                   
+         
+       
+        <div id="time">  </div>
+
+		  <p><strong class = "p1">Time Calculation for 5 to 15 Minutes (minutes:seconds:milliseconds) </strong>      
+<br>
+</p> 
+        <div id = "time2"> </div>
 
 	<button type="button" class="collapsible">More Info on Time Calculation (Click to Expand)</button>
 		<div class="content">
@@ -85,7 +62,7 @@
 			Each Silent Assassin Bonus (Objectives Complete, Never Spotted, No Noticed Kills, No Bodies Found, No Recordings) is 20k points towards the M value, while each nontarget kill is -5k points 
 			towards the M value. Note that the Time Bonus does not count towards the M value. The maximum M value is 100,000.
 			<br>
-			<br>
+			<br>	
 			<a href="https://media.discordapp.net/attachments/833505136290299935/931056141272764516/unknown.png" target= blank>
 			If confused by terminology in above paragraph, refer to this reference image of Detailed Score (press P on a Hitman mission rating screen to get to this menu in-game)</a>
 			<br>
@@ -114,23 +91,18 @@
 			
 			</p>
 </div>
-				
-			<div class="BioDiv">
-				<p>
-					<a href="https://solderq35.github.io/time-calc-under-5/" class= "p1">Calculator for runs of less than 5 minutes</a>
-				<br>  	
-				<br>
-				<a href="https://solderq35.github.io/time-calc-under-5/sa" class= "p1">Calculator for just SA runs (Less Inputs Needed)</a>
-				<br>
-				<br>
-				<b class= "p3">
-					Code by Solderq35
-				</b>
-				</p>
-			</div>
-			
+<div class="BioDiv">
 
-
+<p>
+  <a href="https://solderq35.github.io/time-calc-under-5/"  class= "p1">Back to the regular calculator (Under 5 minutes)</a>
+  <br>
+  <br>
+  <a href="https://solderq35.github.io/time-calc-under-5/over5"  class= "p1">Back to the regular calculator (5 to 15 minutes)</a>
+	<br>
+	<br>
+Code by Solderq35
+</p>
+</div>
 <script>
 var coll = document.getElementsByClassName("collapsible");
 var i;
@@ -147,6 +119,5 @@ for (i = 0; i < coll.length; i++) {
   });
 }
 </script>
-
-	</body>
+</body>
 </html>
