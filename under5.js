@@ -37,6 +37,7 @@ function findTotal()
 	var seconds_input = 0;
 	var ms_input=0; // milliseconds output
 	var seconds_input_array = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+	var seconds_input_array_whole = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 	var output_div_array = ["time", "time2", "time3", "time4", "time5", "time6", "time7", "time8", "time9", "time10", "time11", "time12", "time13", "time14", "time15", "time16", "time17", "time18", "time19", "time20"];
 	var ms_input_array = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 	
@@ -48,7 +49,8 @@ function findTotal()
 			if (parseFloat(score_array[i].value))
 			{
 				
-				seconds_input_array[k] = (210000 - ((parseFloat(score_array[i].value)) * (100000 / parseFloat(5000*(k+1))))) * (3 / 400);
+				seconds_input_array[k] = (210000 - ((parseInt(score_array[i].value)) * (100000 / parseInt(5000*(k+1))))) * (3 / 400);
+				seconds_input_array_whole[k] = ((210000 - ((parseInt(score_array[i].value)) * (100000 / parseInt(5000*(k+1)))))*1000) * (3 / 400);
 			}
 		}
 	}
@@ -57,7 +59,7 @@ function findTotal()
 	document.getElementById('totalordercost').value = seconds_input;
 	for (var m =0; m <= 19; m++)
 	{
-		ms_input_array[m]=Math.floor((((seconds_input_array[m]%60)%1)*1000));
+		ms_input_array[m]=Math.floor((seconds_input_array_whole[m])%1000);
 	}
 	
 	for (var i = 0; i < minutes_array.length; i++)

@@ -29,13 +29,15 @@ function findTotal()
 	var scoreover5 = document.getElementsByClassName('scoreover5');
 	var seconds_input = 0;
 	var seconds_input2=0;
+	var seconds_input_whole = 0;
 	var ms_input=0;
 	var ms_input2=0;
 
 	for (var i = 0; i < scoreunder5.length; i++) 
 	{
 		if (parseFloat(scoreunder5[i].value))
-			seconds_input = (210000 - ((parseFloat(scoreunder5[i].value)) * (100000 / (100000)))) * (3 / 400);
+			seconds_input = (210000 - ((parseInt(scoreunder5[i].value)) * (100000 / ((100000))))) * (3 / 400);
+			seconds_input_whole = ((210000 - ((parseInt(scoreunder5[i].value)) * (100000 / (100000))))*1000) * (3 / 400);
 		}
   
 
@@ -47,8 +49,8 @@ function findTotal()
   
    
   document.getElementById('totalordercost').value = seconds_input;
-  ms_input=Math.floor((((seconds_input%60)%1)*1000));
-  ms_input2=Math.floor((((seconds_input2%60)%1)*1000));
+  ms_input=Math.floor((seconds_input_whole)%1000);
+  ms_input2=Math.floor(((seconds_input2*1000)%60000)%1000);
 
   for (var i = 0; i < scoreunder5.length; i++) 
   {
