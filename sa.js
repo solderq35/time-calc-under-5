@@ -44,13 +44,14 @@ function findTotal()
   for (var i = 0; i < scoreover5.length; i++) 
   {
 		if (parseFloat(scoreover5[i].value))
-			seconds_input2 = (175000 - ((parseFloat(scoreover5[i].value)) * (100000 / ((100000))))) * (3 / 50);
+			seconds_input2 = (175000 - ((parseInt(scoreover5[i].value)) * (100000 / ((100000))))) * (3 / 50);
+			seconds_input_whole2 = ((175000 - ((parseInt(scoreover5[i].value)) * (100000 / (100000))))*1000) * (3 / 50);
   }
   
    
   document.getElementById('totalordercost').value = seconds_input;
   ms_input=Math.floor((seconds_input_whole)%1000);
-  ms_input2=Math.floor(((seconds_input2*1000)%60000)%1000);
+  ms_input2=Math.floor((seconds_input_whole2)%1000);
 
   for (var i = 0; i < scoreunder5.length; i++) 
   {

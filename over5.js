@@ -49,7 +49,7 @@ function findTotal()
 			if (parseFloat(score_array[i].value))
 			{
 				
-				seconds_input_array[k] = (175000 - ((parseFloat(score_array[i].value)) * (100000 / parseFloat(5000*(k+1))))) * (3 / 50);
+				seconds_input_array[k] = (175000 - ((parseInt(score_array[i].value)) * (100000 / parseInt(5000*(k+1))))) * (3 / 50);
 				seconds_input_array_whole[k] = ((175000 - ((parseInt(score_array[i].value)) * (100000 / parseInt(5000*(k+1)))))*1000) * (3 / 50);
 			}
 		}
