@@ -19,6 +19,10 @@ a {
   text-align: center;
 }
 
+li{
+  margin: 10px 0;
+}
+
 .amount{
 width: 85px;
 text-align:center;

@@ -83,14 +83,32 @@
 			<h3> 
 			Usage Quirks
 			</h3>
-			This formula does not work when the N value (Score) and/or M value (Penalties/Bonuses) are 0. Note that one of the Silent Assassin bonuses is "Objectives Complete", and you are almost guaranteed to get points for this simply by killing all targets and exiting the mission. The score can become 0 either due to:
 			<ul>
-				<li>Killing too many nontargets (each nontarget kill is -5k in the Bonuses and Penalties (M) score)</li>
-				<li>Finishing the mission in less than 7 seconds (IOI's "anticheat", currently this only applies to Dubai any% in terms of main missions)</li>
+				<li>
+					This formula does not work when the N value (Score) and/or M value (Penalties/Bonuses) are 0. Note that one of the Silent Assassin bonuses is "Objectives Complete", and you are almost guaranteed to get points for this simply by killing all targets and exiting the mission. The score can become 0 either due to:
+				</li>
+			<ul>
+				<li>Killing too many nontargets (each nontarget kill is -5k in the Bonuses and Penalties (M) score).</li>
+				<li>Finishing the mission in less than 7 seconds (IOI's "anticheat", currently this only applies to Dubai any% in terms of main missions).</li>
+			</ul>
+			
+			
+			<li>Any decimal values smaller than a millisecond in the final result are rounded down to the nearest millisecond.</li>
+			<ul>
+				<li>Example: 26.1857 rounds down to 26.185.</li>
+			</ul>
+			
+				<li>
+					In some rare cases, the rating screen time does not match the calculated decimal time rounded down to the nearest 
+					second. These can be manually rounded to the next fastest second as needed for leaderboard purposes.
+				<ul>
+				<li>Example: 24.000 seconds (calculated via score) may need to be rounded down to 23.99 manually, if the rating screen shows 23 seconds.</li>
+			</ul>
 			</ul>
 			
 			</p>
-</div>
+			</div>
+			
 <div class="BioDiv">
 
 <p>
