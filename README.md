@@ -5,7 +5,9 @@ HITMAN  Score to Time Calculator
 Website: https://solderq35.github.io/time-calc-under-5/
 
 Example Inputs
+
 Score: 182,325 
+
 Time: 3m 26s
 
 This will show exact time of 3:26.327
