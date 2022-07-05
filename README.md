@@ -6,7 +6,7 @@
 ## About
 Tool for calculating in-game time milliseconds for HITMAN level speedruns, **with an estimated 20 regular users among the HITMAN speedrun community**.
 
-Technologies Used:
+### Technologies Used:
   * Lightweight site built with vanilla Javascript, HTML, CSS.
   * Deployed on Github Pages
 
