@@ -3,7 +3,7 @@
 ## Site URL (Try it Yourself!)
 **https://solderq35.github.io/time-calc-under-5/**
 
-Don't like using a website? Check our **[Discord Bot Version of This](https://github.com/solderq35/timmy_mk_2)**
+Don't like using a website? Check our **[Discord Bot Version of This](https://github.com/solderq35/timmy-mk-3)**
 
 ## About
 Tool for calculating in-game time milliseconds for HITMAN level speedruns, **with an estimated 20 regular users among the HITMAN speedrun community**.
