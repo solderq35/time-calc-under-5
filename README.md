@@ -16,7 +16,7 @@ Tool for calculating in-game time milliseconds for HITMAN level speedruns, **wit
 ### Usage Instructions and Screenshots
 1.  Most video examples from [here](https://www.youtube.com/results?search_query=hitman+3+speedrun&sp=EgIYAQ%253D%253D) or [here](https://www.speedrun.com/hitman_3) will work for getting the right inputs if you have trouble finding applicable Hitman speedrun videos.
 2.  For this example, let's use [this video](https://www.youtube.com/watch?v=zIRAmZdl-y4), which is an 8 second run of the "On Top of the World" Hitman level.
-3. We can see that the end of this video that the score at the end of the video is `83,521`. As shown here: ![Score](https://i.ibb.co/6v63rZm/goronscore.png)
+3. We can see that the end of this video that the score at the end of the video is `83,521`. As shown here: ![Score](https://i.ibb.co/6v63rZm/goronscore.PNG)
 4. Now, let's enter `83521` into the "Score" input field on the Milliseconds Calculator Site, and "8" into the "Seconds" field of the "Time Shown on Rating Screen" section, as shown:
 ![Milliseconds Score](https://i.ibb.co/1sgZBZW/demo.png)
 5. Voila! As shown above, the exact millisecond time (8.981) is calculated and displayed immediately. Click on "More Info on Time Calculation" to get more insight on the mathematics behind this site.
