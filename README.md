@@ -76,4 +76,4 @@ Since most players do not show Detailed Score Menu in their run submissions, thi
       - Margin of Error (Seconds): ± [0.00375](https://www.google.com/search?q=%280.5+*+100000+%2F+100000%29+*+%283+%2F+400%29)
       - M value: 100000
       - **Result for SRC (tentative)**: Due to the time shown on rating screen taking precedent, round decimal time down to 40.000 for leaderboard ranking (if using milliseconds)
-      - PS: This case seems to confirm that the score rounds up to the next value, with a rounding cutoff near .5 mark (score decimals of less than .5 = round down, greater than .5 = round up)
+      - PS: This case seems to confirm that the score rounds up to the next value, with a rounding cutoff near .5 mark (score decimals of less than .5 = round down, greater than or equal to .5 = round up)
