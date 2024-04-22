@@ -1,0 +1,13 @@
+{
+  "name": "time-calc-under-5",
+  "version": "1.0.0",
+  "description": "A website for calculating milliseconds for Hitman speedruns",
+  "scripts": {
+    "prettier": "prettier --write ."
+  },
+  "author": "Solderq35",
+  "license": "MIT",
+  "dependencies": {
+    "prettier": "2.6.2"
+  }
+}

@@ -1,10 +1,10 @@
-body { 
-font-family:Helvetica, Arial, sans-serif; font-size:24px; 
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 24px;
 }
 
-input[type="text"]
-{
-    font-size:24px;
+input[type="text"] {
+  font-size: 24px;
 }
 
 a {
@@ -12,51 +12,50 @@ a {
 }
 
 .BioDiv {
-   border-color: red;
+  border-color: red;
   border-width: 8px;
   border-style: outset;
   background-color: lightblue;
   text-align: center;
 }
 
-li{
+li {
   margin: 10px 0;
 }
 
-.amount{
-width: 85px;
-text-align:center;
+.amount {
+  width: 85px;
+  text-align: center;
 }
 
-.minutes{
-width: 40px;
-text-align:center;
+.minutes {
+  width: 40px;
+  text-align: center;
 }
-.seconds{
-width: 40px;
-text-align:center;
-}
-
-.p1{
-font-size:25px;
+.seconds {
+  width: 40px;
+  text-align: center;
 }
 
-.p2{
-font-size:20px;
-font-weight:normal
+.p1 {
+  font-size: 25px;
 }
 
-.p3{
-font-size:25px;
-font-weight:normal
+.p2 {
+  font-size: 20px;
+  font-weight: normal;
 }
 
-.h_custom{
-font-size: 35px;
+.p3 {
+  font-size: 25px;
+  font-weight: normal;
+}
+
+.h_custom {
+  font-size: 35px;
 }
 
 .collapsible {
-	
   border-color: red;
   border-width: 8px;
   border-style: outset outset none outset;
@@ -68,20 +67,19 @@ font-size: 35px;
   text-align: center;
 
   font-size: 30px;
-
 }
 
-.active, .collapsible:hover {
-
+.active,
+.collapsible:hover {
 }
 
 .content {
-	border-color: red;
+  border-color: red;
   border-width: 8px;
   border-style: outset outset none outset;
   font-size: 20px;
   padding: 0 18px;
   display: none;
   overflow: hidden;
-  background-color: #F5F5DC;
+  background-color: #f5f5dc;
 }

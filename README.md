@@ -6,6 +6,11 @@
 
 Don't like using a website? Check our **[Discord Bot Version of This](https://github.com/solderq35/timmy-mk-3)**
 
+### Site Setup
+
+- Install Dependencies: `npm i`
+- Code Formatting: `npm run prettier`
+
 ## About
 
 Tool for calculating in-game time milliseconds for HITMAN level speedruns, **with an estimated 20 regular users among the HITMAN speedrun community**.
@@ -14,6 +19,7 @@ Tool for calculating in-game time milliseconds for HITMAN level speedruns, **wit
 
 - Lightweight site built with vanilla Javascript, HTML, CSS.
 - Deployed on Github Pages
+- Markdown to HTML (for syncing readme and "more info" pane on site): https://markdowntohtml.com/
 
 ### Usage Instructions and Screenshots
 
@@ -75,5 +81,5 @@ Since most players do not show Detailed Score Menu in their run submissions, thi
       - Time Calc Error Range: ([0:39.993](https://www.google.com/search?q=%28210000+-+%28204667.5+*+100000+%2F+100000%29%29+*+%283+%2F+400%29), [0:40.001](https://www.google.com/search?q=%28210000+-+%28204666.5+*+100000+%2F+100000%29%29+*+%283+%2F+400%29)]
       - Margin of Error (Seconds): ± [0.00375](https://www.google.com/search?q=%280.5+*+100000+%2F+100000%29+*+%283+%2F+400%29)
       - M value: 100000
-      - **Result for SRC (tentative)**: Due to the time shown on rating screen taking precedent, round decimal time down to 40.000 for leaderboard ranking (if using milliseconds)
+      - **Result for SRC (tentative)**: Due to the time shown on rating screen taking precedent, use 40.000 for leaderboard ranking (if using milliseconds)
       - PS: This case seems to confirm that the score rounds up to the next value, with a rounding cutoff near .5 mark (score decimals of less than .5 = round down, greater than or equal to .5 = round up)
