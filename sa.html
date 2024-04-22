@@ -72,253 +72,248 @@
       <br />
     </p>
     <div id="time2"></div>
-    <p>
-      <b class="p2">
-        In some cases the calculated result may be 1 second slower than what is
-        shown on rating screen.
-      </b>
-      <br />
-      <b class="p2">
-        If this happens, the time may be rounded to the next fastest second for
-        leaderboard purposes.
-        <button type="button" class="collapsible">
-          More Info on Time Calculation (Click to Expand)
-        </button>
-        <div class="content">
-          <h3 id="mathematics-code-explanation">
-            Mathematics/ Code Explanation
-          </h3>
-          <p>
-            The full mathematical formula for calculating in game time from
-            score, for runs of less than 5 minutes in-game time, is:
-          </p>
-          <p><strong>(210,000 - (N * 100,000 / M)) * (3 / 400)</strong></p>
-          <p>
-            The full mathematical formula for calculating in game time from
-            score, for runs of 5 to 15 minutes, is:
-          </p>
-          <p><strong>(175,000 - (N * 100,000 / M)) * (3 / 50)</strong></p>
-          <p>
-            Let N = The Score shown on screen.<br />Let M = The Bonuses and
-            Penalties added up.
-          </p>
-          <p>
-            Each Silent Assassin Bonus (Objectives Complete, Never Spotted, No
-            Noticed Kills, No Bodies Found, No Recordings) is 20k points towards
-            the M value, while each nontarget kill is -5k points towards the M
-            value. Note that the Time Bonus does not count towards the M value.
-            The maximum M value is 100,000.
-          </p>
-          <p>
-            <a href="https://i.ibb.co/BPPf3wn/detailedscore.png"
-              >If confused by terminology in above paragraph, refer to this
-              reference image of Detailed Score (press P on a Hitman mission
-              rating screen to get to this menu in-game)</a
-            >
-          </p>
-          <p>
-            Since most players do not show Detailed Score Menu in their run
-            submissions, this site runs a script to account for all 20 possible
-            M values, and calculates 20 possible decimal times as a result. The
-            user is asked to report the the time shown on the rating screen
-            (which rounds down to the nearest second). The calculated decimal
-            time that is closest to the time shown on the rating screen is
-            displayed to the user.
-          </p>
-          <h3 id="usage-quirks">Usage Quirks</h3>
-          <ul>
-            <li>
-              <p>
-                This formula does not work when the N value (Score) and/or M
-                value (Penalties/Bonuses) are 0. Note that one of the Silent
-                Assassin bonuses is &quot;Objectives Complete&quot;, and you are
-                almost guaranteed to get points for this simply by killing all
-                targets and exiting the mission. The score can become 0 either
-                due to:
-              </p>
-            </li>
-            <li>
-              <p>
-                Killing too many nontargets (each nontarget kill is -5k in the
-                Bonuses and Penalties (M) score).
-              </p>
-            </li>
-            <li>
-              <p>
-                Finishing the mission in less than 7 seconds (IOI&#39;s
-                &quot;anticheat&quot;, currently this only applies to Dubai any%
-                in terms of main missions).
-              </p>
-            </li>
-            <li>
-              <p>
-                Any decimal values smaller than a millisecond in the final
-                result are rounded down to the nearest millisecond.
-              </p>
-              <ul>
-                <li>Example: 26.1857 rounds down to 26.185.</li>
-              </ul>
-            </li>
-          </ul>
-          <h3 id="error-calculation">Error Calculation</h3>
-          <ul>
-            <li>
-              Disclaimer: The calculated decimal score is not quite accurate
-              (due to the game internally tracking decimals in the score). These
-              can be manually rounded to the next fastest second as needed for
-              leaderboard purposes.
-              <ul>
-                <li>
-                  To be precise:
-                  <strong>Error = (Z * 100,000 / M) * (3 / 400)</strong>
-                  <ul>
-                    <li>
-                      Where M = the penalties and bonuses added up (each SA
-                      bonus 20k, each nontarget kill -5k, etc).
-                    </li>
-                    <li>
-                      And Z = how much the score shown on screen is off, between
-                      -0.5 and 0.5.
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  Assuming -0.5 &lt; Z &lt;= 0.5, the error can be as low as
-                  ±0.00375 seconds (for SA run) or as high as ±0.75 seconds
-                  (any% run with M score of 5k).
-                </li>
-                <li>
-                  Example (calculated time is higher than expected):
-                  <ul>
-                    <li>
-                      SCORE (N): 113593
-                      <ul>
-                        <li><strong>Actual Score Screen</strong>: 0:25.xxx</li>
-                        <li>
-                          Original Time Calc:
-                          <a
-                            href="https://www.google.com/search?q=%28210000+-+%28113593+*+100000+%2F+55000%29%29+*+%283+%2F+400%29"
-                            >0:26.004</a
-                          >
-                        </li>
-                        <li>
-                          Time Calc Error Range: (<a
-                            href="https://www.google.com/search?q=%28210000+-+%28113593.5+*+100000+%2F+55000%29%29+*+%283+%2F+400%29"
-                            >0:25.997</a
-                          >,
-                          <a
-                            href="https://www.google.com/search?q=%28210000+-+%28113592.5+*+100000+%2F+55000%29%29+*+%283+%2F+400%29"
-                            >0:26.011</a
-                          >)
-                        </li>
-                        <li>
-                          Margin of Error (Seconds): ±
-                          <a
-                            href="https://www.google.com/search?q=%280.5+*+100000+%2F+55000%29+*+%283+%2F+400%29"
-                            >0.00681</a
-                          >
-                        </li>
-                        <li>M value: 55000</li>
-                        <li>
-                          <strong>Result for SRC</strong>: Due to the time shown
-                          on rating screen taking precedent, use 25.999 for
-                          leaderboard ranking (if using milliseconds)
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  Example (calculated time is lower than expected):
-                  <ul>
-                    <li>
-                      SCORE: 204667
-                      <ul>
-                        <li>
-                          <strong>Actual Time shown on Rating Screen</strong>:
-                          40.xxx
-                        </li>
-                        <li>
-                          Original Time Calc:
-                          <a
-                            href="https://www.google.com/search?q=%28210000+-+%28204667+*+100000+%2F+100000%29%29+*+%283+%2F+400%29"
-                            >0:39.997</a
-                          >
-                        </li>
-                        <li>
-                          Time Calc Error Range: (<a
-                            href="https://www.google.com/search?q=%28210000+-+%28204667.5+*+100000+%2F+100000%29%29+*+%283+%2F+400%29"
-                            >0:39.993</a
-                          >,
-                          <a
-                            href="https://www.google.com/search?q=%28210000+-+%28204666.5+*+100000+%2F+100000%29%29+*+%283+%2F+400%29"
-                            >0:40.001</a
-                          >]
-                        </li>
-                        <li>
-                          Margin of Error (Seconds): ±
-                          <a
-                            href="https://www.google.com/search?q=%280.5+*+100000+%2F+100000%29+*+%283+%2F+400%29"
-                            >0.00375</a
-                          >
-                        </li>
-                        <li>M value: 100000</li>
-                        <li>
-                          <strong>Result for SRC (tentative)</strong>: Due to
-                          the time shown on rating screen taking precedent, use
-                          40.000 for leaderboard ranking (if using milliseconds)
-                        </li>
-                        <li>
-                          PS: This case seems to confirm that the score rounds
-                          up to the next value, with a rounding cutoff near .5
-                          mark (score decimals of less than .5 = round down,
-                          greater than or equal to .5 = round up)
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-        <div class="BioDiv">
-          <p>
-            <a href="https://solderq35.github.io/time-calc-under-5/" class="p1"
-              >Back to the regular calculator (Under 5 minutes)</a
-            >
-            <br />
-            <br />
-            <a
-              href="https://solderq35.github.io/time-calc-under-5/over5"
-              class="p1"
-              >Back to the regular calculator (5 to 15 minutes)</a
-            >
-            <br />
-            <br />
-            Code by
-            <a href="https://solderq35.github.io/" class="p1">Solderq35</a>
-          </p>
-        </div>
-        <script>
-          var coll = document.getElementsByClassName("collapsible");
-          var i;
-          for (i = 0; i < coll.length; i++) {
-            coll[i].addEventListener("click", function () {
-              this.classList.toggle("active");
-              var content = this.nextElementSibling;
-              if (content.style.display === "block") {
-                content.style.display = "none";
-              } else {
-                content.style.display = "block";
-              }
-            });
-          }
-        </script>
-        <script>
-          document.body.style.backgroundColor = "#F5F5DC";
-        </script>
-      </b>
-    </p>
+    <b class="p2">
+      In some cases the calculated result may be 1 second slower than what is
+      shown on rating screen.
+    </b>
+    <br />
+    <b class="p2">
+      If this happens, the time may be rounded to the next fastest second for
+      leaderboard purposes.
+      <button type="button" class="collapsible">
+        More Info on Time Calculation (Click to Expand)
+      </button>
+      <div class="content">
+        <h3 id="mathematics-code-explanation">Mathematics/ Code Explanation</h3>
+        <p>
+          The full mathematical formula for calculating in game time from score,
+          for runs of less than 5 minutes in-game time, is:
+        </p>
+        <p><strong>(210,000 - (N * 100,000 / M)) * (3 / 400)</strong></p>
+        <p>
+          The full mathematical formula for calculating in game time from score,
+          for runs of 5 to 15 minutes, is:
+        </p>
+        <p><strong>(175,000 - (N * 100,000 / M)) * (3 / 50)</strong></p>
+        <p>
+          Let N = The Score shown on screen.<br />Let M = The Bonuses and
+          Penalties added up.
+        </p>
+        <p>
+          Each Silent Assassin Bonus (Objectives Complete, Never Spotted, No
+          Noticed Kills, No Bodies Found, No Recordings) is 20k points towards
+          the M value, while each nontarget kill is -5k points towards the M
+          value. Note that the Time Bonus does not count towards the M value.
+          The maximum M value is 100,000.
+        </p>
+        <p>
+          <a href="https://i.ibb.co/BPPf3wn/detailedscore.png"
+            >If confused by terminology in above paragraph, refer to this
+            reference image of Detailed Score (press P on a Hitman mission
+            rating screen to get to this menu in-game)</a
+          >
+        </p>
+        <p>
+          Since most players do not show Detailed Score Menu in their run
+          submissions, this site runs a script to account for all 20 possible M
+          values, and calculates 20 possible decimal times as a result. The user
+          is asked to report the the time shown on the rating screen (which
+          rounds down to the nearest second). The calculated decimal time that
+          is closest to the time shown on the rating screen is displayed to the
+          user.
+        </p>
+        <h3 id="usage-quirks">Usage Quirks</h3>
+        <ul>
+          <li>
+            <p>
+              This formula does not work when the N value (Score) and/or M value
+              (Penalties/Bonuses) are 0. Note that one of the Silent Assassin
+              bonuses is &quot;Objectives Complete&quot;, and you are almost
+              guaranteed to get points for this simply by killing all targets
+              and exiting the mission. The score can become 0 either due to:
+            </p>
+          </li>
+          <li>
+            <p>
+              Killing too many nontargets (each nontarget kill is -5k in the
+              Bonuses and Penalties (M) score).
+            </p>
+          </li>
+          <li>
+            <p>
+              Finishing the mission in less than 7 seconds (IOI&#39;s
+              &quot;anticheat&quot;, currently this only applies to Dubai any%
+              in terms of main missions).
+            </p>
+          </li>
+          <li>
+            <p>
+              Any decimal values smaller than a millisecond in the final result
+              are rounded down to the nearest millisecond.
+            </p>
+            <ul>
+              <li>Example: 26.1857 rounds down to 26.185.</li>
+            </ul>
+          </li>
+        </ul>
+        <h3 id="error-calculation">Error Calculation</h3>
+        <ul>
+          <li>
+            Disclaimer: The calculated decimal score is not quite accurate (due
+            to the game internally tracking decimals in the score). These can be
+            manually rounded to the next fastest second as needed for
+            leaderboard purposes.
+            <ul>
+              <li>
+                To be precise:
+                <strong>Error = (Z * 100,000 / M) * (3 / 400)</strong>
+                <ul>
+                  <li>
+                    Where M = the penalties and bonuses added up (each SA bonus
+                    20k, each nontarget kill -5k, etc).
+                  </li>
+                  <li>
+                    And Z = how much the score shown on screen is off, between
+                    -0.5 and 0.5.
+                  </li>
+                </ul>
+              </li>
+              <li>
+                Assuming -0.5 &lt; Z &lt;= 0.5, the error can be as low as
+                ±0.00375 seconds (for SA run) or as high as ±0.75 seconds (any%
+                run with M score of 5k).
+              </li>
+              <li>
+                Example (calculated time is higher than expected):
+                <ul>
+                  <li>
+                    SCORE (N): 113593
+                    <ul>
+                      <li><strong>Actual Score Screen</strong>: 0:25.xxx</li>
+                      <li>
+                        Original Time Calc:
+                        <a
+                          href="https://www.google.com/search?q=%28210000+-+%28113593+*+100000+%2F+55000%29%29+*+%283+%2F+400%29"
+                          >0:26.004</a
+                        >
+                      </li>
+                      <li>
+                        Time Calc Error Range: (<a
+                          href="https://www.google.com/search?q=%28210000+-+%28113593.5+*+100000+%2F+55000%29%29+*+%283+%2F+400%29"
+                          >0:25.997</a
+                        >,
+                        <a
+                          href="https://www.google.com/search?q=%28210000+-+%28113592.5+*+100000+%2F+55000%29%29+*+%283+%2F+400%29"
+                          >0:26.011</a
+                        >)
+                      </li>
+                      <li>
+                        Margin of Error (Seconds): ±
+                        <a
+                          href="https://www.google.com/search?q=%280.5+*+100000+%2F+55000%29+*+%283+%2F+400%29"
+                          >0.00681</a
+                        >
+                      </li>
+                      <li>M value: 55000</li>
+                      <li>
+                        <strong>Result for SRC</strong>: Due to the time shown
+                        on rating screen taking precedent, use 25.999 for
+                        leaderboard ranking (if using milliseconds)
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                Example (calculated time is lower than expected):
+                <ul>
+                  <li>
+                    SCORE: 204667
+                    <ul>
+                      <li>
+                        <strong>Actual Time shown on Rating Screen</strong>:
+                        40.xxx
+                      </li>
+                      <li>
+                        Original Time Calc:
+                        <a
+                          href="https://www.google.com/search?q=%28210000+-+%28204667+*+100000+%2F+100000%29%29+*+%283+%2F+400%29"
+                          >0:39.997</a
+                        >
+                      </li>
+                      <li>
+                        Time Calc Error Range: (<a
+                          href="https://www.google.com/search?q=%28210000+-+%28204667.5+*+100000+%2F+100000%29%29+*+%283+%2F+400%29"
+                          >0:39.993</a
+                        >,
+                        <a
+                          href="https://www.google.com/search?q=%28210000+-+%28204666.5+*+100000+%2F+100000%29%29+*+%283+%2F+400%29"
+                          >0:40.001</a
+                        >]
+                      </li>
+                      <li>
+                        Margin of Error (Seconds): ±
+                        <a
+                          href="https://www.google.com/search?q=%280.5+*+100000+%2F+100000%29+*+%283+%2F+400%29"
+                          >0.00375</a
+                        >
+                      </li>
+                      <li>M value: 100000</li>
+                      <li>
+                        <strong>Result for SRC (tentative)</strong>: Due to the
+                        time shown on rating screen taking precedent, use 40.000
+                        for leaderboard ranking (if using milliseconds)
+                      </li>
+                      <li>
+                        PS: This case seems to confirm that the score rounds up
+                        to the next value, with a rounding cutoff near .5 mark
+                        (score decimals of less than .5 = round down, greater
+                        than or equal to .5 = round up)
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="BioDiv">
+        <p>
+          <a href="https://solderq35.github.io/time-calc-under-5/" class="p1"
+            >Back to the regular calculator (Under 5 minutes)</a
+          >
+          <br />
+          <br />
+          <a
+            href="https://solderq35.github.io/time-calc-under-5/over5"
+            class="p1"
+            >Back to the regular calculator (5 to 15 minutes)</a
+          >
+          <br />
+          <br />
+          Code by
+          <a href="https://solderq35.github.io/" class="p1">Solderq35</a>
+        </p>
+      </div>
+      <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+        for (i = 0; i < coll.length; i++) {
+          coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+              content.style.display = "none";
+            } else {
+              content.style.display = "block";
+            }
+          });
+        }
+      </script>
+      <script>
+        document.body.style.backgroundColor = "#F5F5DC";
+      </script>
+    </b>
   </body>
 </html>
