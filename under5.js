@@ -62,110 +62,171 @@ function findTime(seconds_input, ms_input, output_div) {
 }
 
 function findTotal() {
-  /*This function is the overarching function that sets up input/ output arrays, and determines which solutions to show.*/
+  let score = parseInt(document.getElementById("score").value);
+  let debug = document.getElementById("debug");
+  console.log(debug.checked);
+  // score = parseFloat(score.replace(/,/g, ""));
 
-  var score_array = document.getElementsByClassName("score");
-  var minutes_array = document.getElementsByClassName("minutes");
-  var seconds_array = document.getElementsByClassName("seconds");
-  var seconds_input = 0;
-  var ms_input = 0; // milliseconds output
-  var seconds_input_array = [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ];
-  var seconds_input_array_whole = [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ];
-  var output_div_array = [
-    "time",
-    "time2",
-    "time3",
-    "time4",
-    "time5",
-    "time6",
-    "time7",
-    "time8",
-    "time9",
-    "time10",
-    "time11",
-    "time12",
-    "time13",
-    "time14",
-    "time15",
-    "time16",
-    "time17",
-    "time18",
-    "time19",
-    "time20",
-  ];
-  var ms_input_array = [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ];
+  const result_array = [];
+  // for all 20 possible M values
+  for (let i = 1; i <= 20; i++) {
+    // base M value multiplier (bonuses and penalties from rating screen)
+    let base_M = 5000 * i;
 
-  // This for loop generates an array of the possible seconds input values
-  for (var k = 0; k <= 19; k++) {
-    for (var i = 0; i < score_array.length; i++) {
-      if (parseFloat(score_array[i].value)) {
-        seconds_input_array[k] =
-          (210000 -
-            parseInt(score_array[i].value) *
-              (100000 / parseInt(5000 * (k + 1)))) *
-          (3 / 400);
-        seconds_input_array_whole[k] =
-          (210000 -
-            parseInt(score_array[i].value) *
-              (100000 / parseInt(5000 * (k + 1)))) *
-          1000 *
-          (3 / 400);
+    // base result value (given in seconds:milliseconds. No rounding yet)
+    let base_result =
+      (parseFloat(210000) - parseFloat((score * 100000) / base_M)) *
+      parseFloat(3 / 400);
+
+    // error range (difference between upper bound ("base_result") and lower bound)
+    let error_range_result =
+      parseFloat((0.5 * 100000) / base_M) * parseFloat(3 / 400);
+
+    // lower bound result value (given in seconds:milliseconds. No rounding yet)
+    let lower_bound_result =
+      (parseFloat(210000) - parseFloat(((score + 0.5) * 100000) / base_M)) *
+      parseFloat(3 / 400);
+
+    // higher bound result value (given in seconds:milliseconds. No rounding yet)
+    let higher_bound_result =
+      (parseFloat(210000) - parseFloat(((score - 0.5) * 100000) / base_M)) *
+      parseFloat(3 / 400);
+
+    // only calculate if the base result value is within bounds of 0 - 5 minutes
+    if (base_result > 0 && base_result < 300) {
+      let formatted_result = formatTime(base_result).formatted_result;
+      let formatted_lower_bound =
+        formatTime(lower_bound_result).formatted_result;
+      let lower_bound_seconds = formatTime(lower_bound_result).seconds;
+      let formatted_higher_bound =
+        formatTime(higher_bound_result).formatted_result;
+      let higher_bound_seconds = formatTime(higher_bound_result).seconds;
+      let error_range_seconds = formatTime(error_range_result).seconds;
+
+      // show 10^-5 seconds (thousandths of a millisecond) for error range delta (plus or minus from original time calc value)
+      // all ranges below are the same ms padding logic as in formatTime function, but with *100 for all ranges
+      let error_range_milliseconds = Math.floor(
+        (error_range_seconds * 100000) % 100000
+      );
+      let formatted_error_range =
+        formatTime(error_range_result).formatted_result;
+      if (error_range_milliseconds < 100000) {
+        if (error_range_milliseconds < 1000) {
+          formatted_error_range = "0.00" + error_range_milliseconds;
+        } else if (
+          error_range_milliseconds >= 1000 &&
+          error_range_milliseconds < 10000
+        ) {
+          formatted_error_range = "0.0" + error_range_milliseconds;
+        } else if (
+          error_range_milliseconds >= 10000 &&
+          error_range_milliseconds < 100000
+        ) {
+          formatted_error_range = "0." + error_range_milliseconds;
+        }
+      }
+      let debug_result = `- Original Time Calc: [${formatted_result}](<https://www.google.com/search?q=%28210000+-+%28${parseFloat(
+        score
+      )}+*+100000+%2F+${base_M}%29%29+*+%283+%2F+400%29>)<n>  - Time Calc Error Range: ([${formatted_lower_bound}](<https://www.google.com/search?q=%28210000+-+%28${parseFloat(
+        score + 0.5
+      )}+*+100000+%2F+${base_M}%29%29+*+%283+%2F+400%29>), [${formatted_higher_bound}](<https://www.google.com/search?q=%28210000+-+%28${parseFloat(
+        score - 0.5
+      )}+*+100000+%2F+${base_M}%29%29+*+%283+%2F+400%29>)]<n>  - Margin of Error (Seconds): ± [${formatted_error_range}](<https://www.google.com/search?q=%280.5+*+100000+%2F+${base_M}%29+*+%283+%2F+400%29>)<n>  - M value: ${base_M}`;
+
+      result_array.push(formatted_result);
+      if (
+        Math.floor(lower_bound_seconds) !== Math.floor(higher_bound_seconds)
+      ) {
+        let debugCommand = "!debugtime " + score;
+        let debugTip =
+          "- Potential rounding error detected, for more info check `" +
+          debugCommand +
+          "`";
+        result_array.push(debugTip);
       }
     }
   }
 
-  // This for loop generates an array of the possible millisecond input values
-  document.getElementById("totalordercost").value = seconds_input;
-  for (var m = 0; m <= 19; m++) {
-    ms_input_array[m] = Math.floor(seconds_input_array_whole[m] % 1000);
+  let msgOutput = result_array.join("<br />");
+
+  // regex for input validation (only numeric input accepted)
+  console.log(score);
+  let num_hyphen_check = /^[0-9]*$/;
+  console.log(num_hyphen_check.test(score));
+  console.log(result_array);
+  if (
+    num_hyphen_check.test(score) == false ||
+    score > 210000 ||
+    score < 5000 ||
+    // if no numbers were returned in range (0 to 5 minutes), it's a bad input
+    result_array.length === 0
+  ) {
+    msgOutput = "Invalid Score :smiling_face_with_3_hearts:";
+    let error_output_string = msgOutput.toString();
+    document.getElementById("time0").innerHTML = error_output_string;
+  } else {
+    //console.log(score);
+    console.log(msgOutput);
+    let base_output_string = msgOutput.toString();
+    document.getElementById("time0").innerHTML = base_output_string;
+    /*
+      for (let i = 0; i < 20; i++) {
+        if (result_array[i]) {
+          document.getElementById(`time${i}`).innerHTML = String(result_array[i]);
+        }
+      }
+      */
+  }
+}
+
+function formatTime(base_result) {
+  let minutes = Math.floor(base_result / 60);
+  let seconds = base_result - minutes * 60;
+
+  // milliseconds we multiply by 1000 and then take remainder after dividing by 1000, to eliminate
+  // float division rounding errors
+  let milliseconds = Math.floor((seconds * 1000) % 1000);
+
+  // put the minutes / seconds / milliseconds together formatted
+  let formatted_result;
+  let formatted_seconds;
+  let formatted_milliseconds;
+
+  // add one leading zero to seconds digit if there are less than 10 seconds
+  if (seconds < 10) {
+    formatted_seconds = ":0" + Math.floor(seconds);
+  } else {
+    formatted_seconds = ":" + Math.floor(seconds);
   }
 
-  for (var i = 0; i < minutes_array.length; i++) {
-    // For loop to call the findTime function for all possible inputs.
-    for (var l = 0; l <= 19; l++) {
-      findTime(seconds_input_array[l], ms_input_array[l], output_div_array[l]);
-    }
+  // add two leading zeros to milliseconds digit if there are less than 10 milliseconds
+  if (milliseconds < 10) {
+    formatted_milliseconds = ".00" + (milliseconds % 1000);
+  }
 
-    /* Only show the possible calculated solution that is the same or 1 second more
-		than the time shown on rating screen (due to possible rounding errors)  */
-    for (var n = 0; n <= 19; n++) {
-      if (
-        Math.floor(parseFloat(minutes_array[i].value)) * 60 +
-          parseFloat(seconds_array[i].value) ==
-          Math.floor(seconds_input_array[n]) / 1 - 1 ||
-        Math.floor(parseFloat(minutes_array[i].value)) * 60 +
-          parseFloat(seconds_array[i].value) ==
-          Math.floor(seconds_input_array[n]) / 1 ||
-        Math.floor(parseFloat(minutes_array[i].value)) * 60 +
-          parseFloat(seconds_array[i].value) >
-          0
-      ) {
-        document.getElementById(output_div_array[n]).style.display = "block";
-      }
-    }
+  // add one leading zero to milliseconds digit if there are 10 to 99 milliseconds
+  else if (milliseconds >= 10 && milliseconds < 100) {
+    formatted_milliseconds = ".0" + (milliseconds % 1000);
+  } else {
+    formatted_milliseconds = "." + (milliseconds % 1000);
+  }
 
-    /* Do not show the possible calculated solutions that are either less than the time shown on rating
-		screeen, or at least 2 seconds more than the time shown on rating screen (due to possible rounding errors)*/
-    for (var o = 0; o <= 19; o++) {
-      if (
-        Math.floor(parseFloat(minutes_array[i].value)) * 60 +
-          parseFloat(seconds_array[i].value) <
-          Math.floor(seconds_input_array[o]) / 1 - 1 ||
-        Math.floor(parseFloat(minutes_array[i].value)) * 60 +
-          parseFloat(seconds_array[i].value) >
-          Math.floor(seconds_input_array[o]) / 1 ||
-        Math.floor(parseFloat(minutes_array[i].value)) * 60 +
-          parseFloat(seconds_array[i].value) <=
-          0
-      ) {
-        document.getElementById(output_div_array[o]).style.display = "none";
-      }
+  formatted_result = minutes + formatted_seconds + formatted_milliseconds;
+  return { seconds, formatted_result };
+}
+
+function initPage() {
+  let queryIndex = window.location.href.indexOf("?");
+  let params = window.location.href.substring(queryIndex + 1).split("&");
+  console.log(queryIndex);
+  console.log(params);
+  for (i = 0; i < params.length; i++) {
+    param = params[i].split("=");
+    console.log(param);
+    if (param[0].substr(0, 1) === "s") {
+      let num = param[1];
+      console.log(num);
+      document.getElementById("score").value = String(num);
     }
   }
 }

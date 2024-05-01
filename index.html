@@ -17,7 +17,7 @@
       content="https://img.icons8.com/color/344/calculator--v1.png"
     />
   </head>
-  <body>
+  <body onLoad="return (initPage(), findTotal())">
     <title>HITMAN Milliseconds Time Calculator (Under 5 minutes)</title>
     <div class="test">
       <h2 class="h_custom">
@@ -30,12 +30,7 @@
           Calculation will not work if score is 0. No commas please!</b
         >
         <br />
-        <input
-          onkeyup="findTotal()"
-          type="text"
-          class="score"
-          name="printcost"
-        />
+        <input onkeyup="findTotal()" type="text" id="score" name="printcost" />
       </p>
       <p>
         <strong class="p1"
@@ -75,26 +70,8 @@
     <b class="p2">
       If this happens, the time may be rounded to the next fastest second for
       leaderboard purposes.
-      <div id="time" class="p3"></div>
-      <div id="time2" class="p3"></div>
-      <div id="time3" class="p3"></div>
-      <div id="time4" class="p3"></div>
-      <div id="time5" class="p3"></div>
-      <div id="time6" class="p3"></div>
-      <div id="time7" class="p3"></div>
-      <div id="time8" class="p3"></div>
-      <div id="time9" class="p3"></div>
-      <div id="time10" class="p3"></div>
-      <div id="time11" class="p3"></div>
-      <div id="time12" class="p3"></div>
-      <div id="time13" class="p3"></div>
-      <div id="time14" class="p3"></div>
-      <div id="time15" class="p3"></div>
-      <div id="time16" class="p3"></div>
-      <div id="time17" class="p3"></div>
-      <div id="time18" class="p3"></div>
-      <div id="time19" class="p3"></div>
-      <div id="time20" class="p3"></div>
+      <div id="time0" class="p3"></div>
+      <input type="checkbox" id="debug" name="debug" value="debug" />
       <button type="button" class="collapsible">
         More Info on Time Calculation (Click to Expand)
       </button>
