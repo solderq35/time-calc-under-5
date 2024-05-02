@@ -223,7 +223,7 @@ function initPage() {
   for (i = 0; i < params.length; i++) {
     param = params[i].split("=");
     console.log(param);
-    if (param[0].substr(0, 1) === "s") {
+    if (param[0] === "score") {
       let num = param[1];
       console.log(num);
       document.getElementById("score").value = String(num);
