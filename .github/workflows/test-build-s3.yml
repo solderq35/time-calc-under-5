@@ -1,3 +1,7 @@
+# Reference:
+# https://github.com/actions/starter-workflows/blob/main/pages/static.yml
+# https://github.com/OSU-Sustainability-Office/sustainability-kiosks/blob/master/.github/workflows/test-build-s3.yml
+
 # Simple workflow for deploying static content to GitHub Pages
 name: Deploy static content to Pages
 
