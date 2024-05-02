@@ -1,21 +1,11 @@
-# Reference: https://pagertree.com/blog/jekyll-site-to-aws-s3-using-github-actions
+# Simple workflow for deploying static content to GitHub Pages
+name: Deploy static content to Pages
 
-name: S3 Test Build
-
-# Controls when the action will run. 
 on:
-  # Triggers the workflow on PR to the main branch
+  # Runs on PR targeting the default branch
   pull_request:
     branches:
-      - main
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-  
-env:
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  AWS_DEFAULT_REGION: 'us-west-2'
+      - master
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -33,28 +23,22 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Build job
-  build:
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@8575951200e472d5f2d95c625da0c7bec8217c42 # v1.161.0
-        with:
-          ruby-version: '3.1' # Not needed with a .ruby-version file
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-          cache-version: 0 # Increment this number if you need to re-download cached gems
       - name: Setup Pages
-        id: pages
         uses: actions/configure-pages@v5
-      - name: Build with Jekyll
-        # Outputs to the './_site' directory by default
-        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
-        env:
-          JEKYLL_ENV: production
       - name: Upload artifact
-        # Automatically uploads an artifact from the './_site' directory by default
         uses: actions/upload-pages-artifact@v3
-      - name: "Deploy to AWS S3"
-        run: aws s3 sync ./_site/ s3://time-calc-under-5 --acl public-read --delete --cache-control max-age=604800
+        with:
+          # Upload entire repository
+          path: '.'
+      - name: deploy frontend to s3
+        run: |
+          aws s3 sync ./dist s3://time-calc-under-5
