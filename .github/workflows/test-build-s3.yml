@@ -45,7 +45,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: '.'
+          path: "."
       - name: deploy frontend to s3
         run: |
           aws s3 sync ./ s3://time-calc-under-5
