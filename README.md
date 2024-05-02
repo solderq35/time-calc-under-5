@@ -2,7 +2,8 @@
 
 ## Site URL (Try it Yourself!)
 
-**https://solderq35.github.io/time-calc-under-5/**
+- Production Deployment URL: https://solderq35.github.io/time-calc-under-5/
+- Test Deployment URL: https://time-calc-under-5.s3.us-west-2.amazonaws.com/index.html
 
 Don't like using a website? Check our **[Discord Bot Version of This](https://github.com/solderq35/timmy-mk-3)**
 
@@ -10,6 +11,13 @@ Don't like using a website? Check our **[Discord Bot Version of This](https://gi
 
 - Install Dependencies: `npm i`
 - Code Formatting: `npm run prettier`
+- Open static HTML files in browser for local development
+
+### Deployment Details
+
+- Test Deployment is triggered by pull requests to main branch (see `.github/workflows/test-build-s3.yml`)
+  - Currently no JS library dependencies, so just upload entire repo (minus what's in gitignore) to s3
+- Production Deployment is triggered by pushes to main branch. It is handled by default GitHub Pages integration (Jeykyll?), not by a workflow file
 
 ## About
 
