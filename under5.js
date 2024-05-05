@@ -215,6 +215,7 @@ function formatTime(base_result) {
   return { seconds, formatted_result };
 }
 
+// reference: https://github.com/solderq35/fg-time-calc/blob/main/index.js#L756
 function initPage() {
   let queryIndex = window.location.href.indexOf("?");
   let params = window.location.href.substring(queryIndex + 1).split("&");
