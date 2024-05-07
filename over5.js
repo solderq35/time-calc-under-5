@@ -21,25 +21,32 @@ function findTotal() {
 
     // base result value (given in seconds:milliseconds. No rounding yet)
     let base_result =
-      (parseFloat(baseScore) - parseFloat((score * 100000) / base_M)) *
-      parseFloat(3 / baseDivisor);
+      (parseInt(baseScore) - parseInt(score * 100000) / parseInt(base_M)) *
+      parseInt(1000 * (3 / baseDivisor));
 
     // error range (difference between upper bound ("base_result") and lower bound)
     let error_range_result =
-      parseFloat((0.5 * 100000) / base_M) * parseFloat(3 / baseDivisor);
+      (parseInt(0.5 * 100000) / parseInt(base_M)) *
+      parseInt(100000 * (3 / baseDivisor));
 
     // lower bound result value (given in seconds:milliseconds. No rounding yet)
     let lower_bound_result =
-      (parseFloat(baseScore) - parseFloat(((score + 0.5) * 100000) / base_M)) *
-      parseFloat(3 / baseDivisor);
+      (parseInt(baseScore) -
+        parseInt((score + 0.5) * 100000) / parseInt(base_M)) *
+      parseInt(1000 * (3 / baseDivisor));
 
     // higher bound result value (given in seconds:milliseconds. No rounding yet)
     let higher_bound_result =
-      (parseFloat(baseScore) - parseFloat(((score - 0.5) * 100000) / base_M)) *
-      parseFloat(3 / baseDivisor);
+      (parseInt(baseScore) -
+        parseInt((score - 0.5) * 100000) / parseInt(base_M)) *
+      parseInt(1000 * (3 / baseDivisor));
 
     // only calculate if the base result value is within bounds of possible values
-    if (base_result >= lowerTimeBound && base_result < higherTimeBound) {
+    if (
+      base_result >= lowerTimeBound * 1000 &&
+      base_result < higherTimeBound * 1000
+    ) {
+      console.log(base_result);
       let formatted_result = formatTime(base_result).formatted_result;
       let formatted_lower_bound =
         formatTime(lower_bound_result).formatted_result;
@@ -47,13 +54,13 @@ function findTotal() {
       let formatted_higher_bound =
         formatTime(higher_bound_result).formatted_result;
       let higher_bound_seconds = formatTime(higher_bound_result).seconds;
-      let error_range_seconds = formatTime(error_range_result).seconds;
+      let error_range_seconds = Math.floor(error_range_result % 100000);
+      console.log(error_range_result);
+      console.log(error_range_seconds);
 
       // show 10^-5 seconds (thousandths of a millisecond) for error range delta (plus or minus from original time calc value)
       // all ranges below are the same ms padding logic as in formatTime function, but with *100 for all ranges
-      let error_range_milliseconds = Math.floor(
-        (error_range_seconds * 100000) % 100000
-      );
+      let error_range_milliseconds = error_range_seconds;
       let formatted_error_range =
         formatTime(error_range_result).formatted_result;
       if (error_range_milliseconds < 100000) {
@@ -132,12 +139,14 @@ function findTotal() {
 }
 
 function formatTime(base_result) {
-  let minutes = Math.floor(base_result / 60);
-  let seconds = base_result - minutes * 60;
+  // let minutes = Math.floor(base_result / (60 * 1000));
+  let base_seconds = Math.floor(base_result / 1000);
+  let minutes = Math.floor(base_seconds / 60);
+  let seconds = Math.floor(base_seconds % 60);
 
   // milliseconds we multiply by 1000 and then take remainder after dividing by 1000, to eliminate
   // float division rounding errors
-  let milliseconds = Math.floor((seconds * 1000) % 1000);
+  let milliseconds = Math.floor(base_result % 1000);
 
   // put the minutes / seconds / milliseconds together formatted
   let formatted_result;
@@ -164,7 +173,7 @@ function formatTime(base_result) {
   }
 
   formatted_result = minutes + formatted_seconds + formatted_milliseconds;
-  return { seconds, formatted_result };
+  return { seconds, milliseconds, formatted_result };
 }
 
 function discordLinkRegex(markdown) {
