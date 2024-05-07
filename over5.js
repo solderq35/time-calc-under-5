@@ -46,7 +46,6 @@ function findTotal() {
       base_result >= lowerTimeBound * 1000 &&
       base_result < higherTimeBound * 1000
     ) {
-      console.log(base_result);
       let formatted_result = formatTime(base_result).formatted_result;
       let formatted_lower_bound =
         formatTime(lower_bound_result).formatted_result;
@@ -55,8 +54,6 @@ function findTotal() {
         formatTime(higher_bound_result).formatted_result;
       let higher_bound_seconds = formatTime(higher_bound_result).seconds;
       let error_range_seconds = Math.floor(error_range_result % 100000);
-      console.log(error_range_result);
-      console.log(error_range_seconds);
 
       // show 10^-5 seconds (thousandths of a millisecond) for error range delta (plus or minus from original time calc value)
       // all ranges below are the same ms padding logic as in formatTime function, but with *100 for all ranges
