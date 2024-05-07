@@ -53,11 +53,10 @@ function findTotal() {
       let formatted_higher_bound =
         formatTime(higher_bound_result).formatted_result;
       let higher_bound_seconds = formatTime(higher_bound_result).seconds;
-      let error_range_seconds = Math.floor(error_range_result % 100000);
 
       // show 10^-5 seconds (thousandths of a millisecond) for error range delta (plus or minus from original time calc value)
       // all ranges below are the same ms padding logic as in formatTime function, but with *100 for all ranges
-      let error_range_milliseconds = error_range_seconds;
+      let error_range_milliseconds = Math.floor(error_range_result % 100000);
       let formatted_error_range =
         formatTime(error_range_result).formatted_result;
       if (error_range_milliseconds < 100000) {
@@ -126,6 +125,7 @@ function findTotal() {
       result_array.length === 0) &&
     score
   ) {
+    // may show up as weird characters on aws 3 test build: https://stackoverflow.com/questions/45949940/how-to-preserve-emoji-character-in-a-s3-file-with-node-js
     msgOutput = "Invalid Score 🥰";
     let error_output_string = msgOutput.toString();
     document.getElementById("time0").innerHTML = error_output_string;
