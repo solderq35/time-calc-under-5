@@ -1,12 +1,12 @@
 body {
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 24px;
+  font-size: 25px;
   padding-left: 10px;
   padding-right: 10px;
 }
 
 input[type="text"] {
-  font-size: 24px;
+  font-size: 25px;
 }
 
 a {
@@ -40,7 +40,7 @@ li {
 }
 
 .p1 {
-  font-size: 24px;
+  font-size: 25px;
 }
 
 .p2 {
@@ -49,7 +49,7 @@ li {
 }
 
 .p3 {
-  font-size: 24px;
+  font-size: 25px;
   font-weight: normal;
 }
 
@@ -94,7 +94,7 @@ li {
   display: inline-block;
   vertical-align: middle;
   position: relative;
-  font-size: 24px;
+  font-size: 25px;
   font-weight: normal;
 }
 
