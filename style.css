@@ -99,11 +99,12 @@ li {
 }
 
 .saveButton {
-  height: 40px;
+  height: auto;
   font-size: 25px;
   cursor: pointer;
 }
 
 .scoreInput {
   width: 160px;
+  font-size: 25px;
 }
