@@ -21,25 +21,25 @@ function findTotal() {
 
     // base result value (given in seconds:milliseconds. No rounding yet)
     let base_result =
-      (parseInt(baseScore) - parseInt(score * 100000) / parseInt(base_M)) *
-      parseInt(1000 * (3 / baseDivisor));
+      (baseScore - parseInt(score) * (100000 / parseInt(base_M))) *
+      1000 *
+      (3 / baseDivisor);
 
     // error range (difference between upper bound ("base_result") and lower bound)
     let error_range_result =
-      (parseInt(0.5 * 100000) / parseInt(base_M)) *
-      parseInt(100000 * (3 / baseDivisor));
+      0.5 * (100000 / parseInt(base_M)) * 100000 * (3 / baseDivisor);
 
     // lower bound result value (given in seconds:milliseconds. No rounding yet)
     let lower_bound_result =
-      (parseInt(baseScore) -
-        parseInt((score + 0.5) * 100000) / parseInt(base_M)) *
-      parseInt(1000 * (3 / baseDivisor));
+      (baseScore - (parseInt(score) + 0.5) * (100000 / parseInt(base_M))) *
+      1000 *
+      (3 / baseDivisor);
 
     // higher bound result value (given in seconds:milliseconds. No rounding yet)
     let higher_bound_result =
-      (parseInt(baseScore) -
-        parseInt((score - 0.5) * 100000) / parseInt(base_M)) *
-      parseInt(1000 * (3 / baseDivisor));
+      (baseScore - (parseInt(score) - 0.5) * (100000 / parseInt(base_M))) *
+      1000 *
+      (3 / baseDivisor);
 
     // only calculate if the base result value is within bounds of possible values
     if (
@@ -236,9 +236,9 @@ function initPage() {
     baseUrl = window.location.href.substring(0, htmlIndex);
   }
   if (htmlIndex < 0) {
-    document.getElementById("fiveMinCalc").href = baseUrl + otherPage;
+    document.getElementById("otherPage").href = baseUrl + otherPage;
   } else {
-    document.getElementById("fiveMinCalc").href = baseUrl + otherPage + ".html";
+    document.getElementById("otherPage").href = baseUrl + otherPage + ".html";
   }
 
   for (i = 0; i < params.length; i++) {
