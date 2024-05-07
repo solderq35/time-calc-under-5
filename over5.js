@@ -254,6 +254,7 @@ function initPage() {
 function clearFields() {
   document.getElementById("score").value = "";
   document.getElementById("debugCheckbox").checked = false;
+  findTotal();
 }
 
 function saveData() {
