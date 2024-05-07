@@ -3,7 +3,7 @@
 # https://github.com/OSU-Sustainability-Office/sustainability-kiosks/blob/master/.github/workflows/test-build-s3.yml
 
 # Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+name: S3 Test Build (static content)
 
 on:
   # Runs on PR targeting the default branch
