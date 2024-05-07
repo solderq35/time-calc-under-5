@@ -170,7 +170,7 @@ function formatTime(base_result) {
   }
 
   formatted_result = minutes + formatted_seconds + formatted_milliseconds;
-  return { seconds, milliseconds, formatted_result };
+  return { seconds, formatted_result };
 }
 
 function discordLinkRegex(markdown) {
