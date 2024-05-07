@@ -107,9 +107,14 @@ function findTotal() {
     }
   }
 
-  let msgOutput = debugState
-    ? result_array.join("")
-    : result_array.join("<br />");
+  let msgOutput = "";
+  for (let i = 0; i < result_array.length; i++) {
+    if (debugState || (!debugState && result_array[i].includes("<ul"))) {
+      msgOutput += result_array[i];
+    } else {
+      msgOutput += result_array[i] + "<br />";
+    }
+  }
 
   // regex for input validation (only numeric input accepted)
   let num_hyphen_check = /^[0-9]*$/;
