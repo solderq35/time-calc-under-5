@@ -1,171 +1,296 @@
-function findTime(seconds_input, ms_input, output_div) {
-  /*This function reformats the raw time inputs into minutes:seconds:milliseconds form, before printing the results
-	to the screen.*/
+// Global Constants (only difference between under5.js and over5.js). Maybe come back to refactor this better later.
+const currentPage = "index";
+const otherPage = "over5";
+const baseScore = 210000;
+const baseDivisor = 400;
+const lowerTimeBound = 0;
+const higherTimeBound = 300;
 
-  if (seconds_input % 60 > 10 && ms_input < 100 && ms_input >= 10) {
-    document.getElementById(output_div).innerHTML =
-      Math.floor(seconds_input / 60) +
-      ":" +
-      Math.floor((seconds_input % 60) / 1) +
-      ":" +
-      "0" +
-      ms_input;
+function findTotal() {
+  let score = parseFloat(
+    document.getElementById("score").value.replace(/,/g, "")
+  );
+  let debugState = document.getElementById("debugCheckbox").checked;
+  let resultCounter = 0;
+
+  const result_array = [];
+  // for all 20 possible M values
+  for (let i = 1; i <= 20; i++) {
+    // base M value multiplier (bonuses and penalties from rating screen)
+    let base_M = 5000 * i;
+
+    // base result value (given in seconds:milliseconds. No rounding yet)
+    let base_result =
+      (baseScore - parseInt(score) * (100000 / parseInt(base_M))) *
+      1000 *
+      (3 / baseDivisor);
+
+    // error range (difference between upper bound ("base_result") and lower bound)
+    let error_range_result =
+      0.5 * (100000 / parseInt(base_M)) * 100000 * (3 / baseDivisor);
+
+    // lower bound result value (given in seconds:milliseconds. No rounding yet)
+    let lower_bound_result =
+      (baseScore - (parseInt(score) + 0.5) * (100000 / parseInt(base_M))) *
+      1000 *
+      (3 / baseDivisor);
+
+    // higher bound result value (given in seconds:milliseconds. No rounding yet)
+    let higher_bound_result =
+      (baseScore - (parseInt(score) - 0.5) * (100000 / parseInt(base_M))) *
+      1000 *
+      (3 / baseDivisor);
+
+    // only calculate if the base result value is within bounds of possible values
+    if (
+      base_result >= lowerTimeBound * 1000 &&
+      base_result < higherTimeBound * 1000
+    ) {
+      let formatted_result = formatTime(base_result).formatted_result;
+      let formatted_lower_bound =
+        formatTime(lower_bound_result).formatted_result;
+      let lower_bound_seconds = formatTime(lower_bound_result).seconds;
+      let formatted_higher_bound =
+        formatTime(higher_bound_result).formatted_result;
+      let higher_bound_seconds = formatTime(higher_bound_result).seconds;
+
+      // show 10^-5 seconds (thousandths of a millisecond) for error range delta (plus or minus from original time calc value)
+      // all ranges below are the same ms padding logic as in formatTime function, but with *100 for all ranges
+      let error_range_milliseconds = Math.floor(error_range_result % 100000);
+      let formatted_error_range =
+        formatTime(error_range_result).formatted_result;
+      if (error_range_milliseconds < 100000) {
+        if (error_range_milliseconds < 1000) {
+          formatted_error_range = "0.00" + error_range_milliseconds;
+        } else if (
+          error_range_milliseconds >= 1000 &&
+          error_range_milliseconds < 10000
+        ) {
+          formatted_error_range = "0.0" + error_range_milliseconds;
+        } else if (
+          error_range_milliseconds >= 10000 &&
+          error_range_milliseconds < 100000
+        ) {
+          formatted_error_range = "0." + error_range_milliseconds;
+        }
+      }
+
+      // Exact string from timmy bot for future reference, use functions above to transform to properly nested html
+      // bullets + link support.
+      const markdownString = `- Original Time Calc: [${formatted_result}](<https://www.google.com/search?q=%28${baseScore}+-+%28${parseFloat(
+        score
+      )}+*+100000+%2F+${base_M}%29%29+*+%283+%2F+${baseDivisor}%29>)\n  - Time Calc Error Range: ([${formatted_lower_bound}](<https://www.google.com/search?q=%28${baseScore}+-+%28${parseFloat(
+        score + 0.5
+      )}+*+100000+%2F+${base_M}%29%29+*+%283+%2F+${baseDivisor}%29>), [${formatted_higher_bound}](<https://www.google.com/search?q=%28${baseScore}+-+%28${parseFloat(
+        score - 0.5
+      )}+*+100000+%2F+${base_M}%29%29+*+%283+%2F+${baseDivisor}%29>)]\n  - Margin of Error (Seconds): ± [${formatted_error_range}](<https://www.google.com/search?q=%280.5+*+100000+%2F+${base_M}%29+*+%283+%2F+${baseDivisor}%29>)\n  - M value: ${base_M}`;
+
+      const htmlOutput = markdownToHtml(
+        markdownLinkRegex(discordLinkRegex(markdownString)),
+        resultCounter
+      );
+
+      let debug_result = htmlOutput;
+
+      if (!debugState) {
+        result_array.push(formatted_result);
+        if (
+          Math.floor(lower_bound_seconds) !== Math.floor(higher_bound_seconds)
+        ) {
+          let debugTip = `<ul style="margin-top: 0; margin-bottom: 0;"><li>Potential rounding error detected, for more info click the <b>Debug Mode</b> checkbox</li></ul>`;
+          result_array.push(debugTip);
+        }
+      } else if (debugState) {
+        result_array.push(debug_result);
+      }
+      resultCounter += 1; // only increment for results in range (0 to 5 minutes)
+    }
   }
-  if (seconds_input % 60 < 10 && ms_input < 100 && ms_input >= 10) {
-    document.getElementById(output_div).innerHTML =
-      Math.floor(seconds_input / 60) +
-      ":" +
-      "0" +
-      Math.floor((seconds_input % 60) / 1) +
-      ":" +
-      "0" +
-      ms_input;
-  }
-  if (seconds_input % 60 > 10 && ms_input < 10) {
-    document.getElementById(output_div).innerHTML =
-      Math.floor(seconds_input / 60) +
-      ":" +
-      Math.floor((seconds_input % 60) / 1) +
-      ":" +
-      "0" +
-      "0" +
-      ms_input;
-  }
-  if (seconds_input % 60 < 10 && ms_input < 10) {
-    document.getElementById(output_div).innerHTML =
-      Math.floor(seconds_input / 60) +
-      ":" +
-      "0" +
-      Math.floor((seconds_input % 60) / 1) +
-      ":" +
-      "0" +
-      "0" +
-      ms_input;
-  }
-  if (seconds_input % 60 > 10 && ms_input >= 100) {
-    document.getElementById(output_div).innerHTML =
-      Math.floor(seconds_input / 60) +
-      ":" +
-      Math.floor((seconds_input % 60) / 1) +
-      ":" +
-      ms_input;
-  }
-  if (seconds_input % 60 < 10 && ms_input >= 100) {
-    document.getElementById(output_div).innerHTML =
-      Math.floor(seconds_input / 60) +
-      ":" +
-      "0" +
-      Math.floor((seconds_input % 60) / 1) +
-      ":" +
-      ms_input;
+
+  let msgOutput = debugState
+    ? result_array.join("")
+    : result_array.join("<br />");
+
+  // regex for input validation (only numeric input accepted)
+  let num_hyphen_check = /^[0-9]*$/;
+  if (
+    (num_hyphen_check.test(score) == false ||
+      score > baseScore ||
+      score < 5000 ||
+      // if no numbers were returned in range (0 to 5 minutes), it's a bad input
+      result_array.length === 0) &&
+    score
+  ) {
+    // may show up as weird characters on aws 3 test build: https://stackoverflow.com/questions/22403071/text-files-uploaded-to-s3-are-encoded-strangely
+    msgOutput = "Invalid Score 🥰";
+    let error_output_string = msgOutput.toString();
+    document.getElementById("time0").innerHTML = error_output_string;
+  } else {
+    let base_output_string = msgOutput.toString();
+    if (debugState) {
+      let debugInfo =
+        "M value = Completed SA bonuses (20k each) minus nontarget kills (5k each).<br />For more info, see below: <b>More Info on Time Calculation</b>";
+      base_output_string += debugInfo;
+    }
+    document.getElementById("time0").innerHTML = base_output_string;
   }
 }
 
-function findTotal() {
-  /*This function is the overarching function that sets up input/ output arrays, and determines which solutions to show.*/
+function formatTime(base_result) {
+  // let minutes = Math.floor(base_result / (60 * 1000));
+  let base_seconds = Math.floor(base_result / 1000);
+  let minutes = Math.floor(base_seconds / 60);
+  let seconds = Math.floor(base_seconds % 60);
 
-  var score_array = document.getElementsByClassName("score");
-  var minutes_array = document.getElementsByClassName("minutes");
-  var seconds_array = document.getElementsByClassName("seconds");
-  var seconds_input = 0;
-  var ms_input = 0; // milliseconds output
-  var seconds_input_array = [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ];
-  var seconds_input_array_whole = [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ];
-  var output_div_array = [
-    "time",
-    "time2",
-    "time3",
-    "time4",
-    "time5",
-    "time6",
-    "time7",
-    "time8",
-    "time9",
-    "time10",
-    "time11",
-    "time12",
-    "time13",
-    "time14",
-    "time15",
-    "time16",
-    "time17",
-    "time18",
-    "time19",
-    "time20",
-  ];
-  var ms_input_array = [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ];
+  // milliseconds we multiply by 1000 and then take remainder after dividing by 1000, to eliminate
+  // float division rounding errors
+  let milliseconds = Math.floor(base_result % 1000);
 
-  // This for loop generates an array of the possible seconds input values
-  for (var k = 0; k <= 19; k++) {
-    for (var i = 0; i < score_array.length; i++) {
-      if (parseFloat(score_array[i].value)) {
-        seconds_input_array[k] =
-          (210000 -
-            parseInt(score_array[i].value) *
-              (100000 / parseInt(5000 * (k + 1)))) *
-          (3 / 400);
-        seconds_input_array_whole[k] =
-          (210000 -
-            parseInt(score_array[i].value) *
-              (100000 / parseInt(5000 * (k + 1)))) *
-          1000 *
-          (3 / 400);
+  // put the minutes / seconds / milliseconds together formatted
+  let formatted_result;
+  let formatted_seconds;
+  let formatted_milliseconds;
+
+  // add one leading zero to seconds digit if there are less than 10 seconds
+  if (seconds < 10) {
+    formatted_seconds = ":0" + Math.floor(seconds);
+  } else {
+    formatted_seconds = ":" + Math.floor(seconds);
+  }
+
+  // add two leading zeros to milliseconds digit if there are less than 10 milliseconds
+  if (milliseconds < 10) {
+    formatted_milliseconds = ".00" + (milliseconds % 1000);
+  }
+
+  // add one leading zero to milliseconds digit if there are 10 to 99 milliseconds
+  else if (milliseconds >= 10 && milliseconds < 100) {
+    formatted_milliseconds = ".0" + (milliseconds % 1000);
+  } else {
+    formatted_milliseconds = "." + (milliseconds % 1000);
+  }
+
+  formatted_result = minutes + formatted_seconds + formatted_milliseconds;
+  return { seconds, formatted_result };
+}
+
+function discordLinkRegex(markdown) {
+  const linkRegex = /\[([^\]]+)\]\(<([^>]+)>\)/g; // Regex for matching Markdown links with <>
+  return markdown.replace(linkRegex, '<a href="$2">$1</a>');
+}
+function markdownLinkRegex(markdown) {
+  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g; // Regex for matching Markdown links
+  return markdown.replace(linkRegex, '<a href="$2">$1</a>');
+}
+function markdownToHtml(markdown, resultCounter) {
+  const lines = markdown.split("\n");
+  let html = "";
+  let currentIndent = 0;
+
+  lines.forEach((line) => {
+    const indent = line.search(/\S/);
+    if (indent === -1) return; // Skip empty lines
+    const bulletCount = Math.floor(indent / 2) + 1;
+    const content = line.trim().substring(bulletCount * 2 - indent);
+    if (indent === 0) {
+      if (resultCounter === 0) {
+        html += '<ul style="margin-top: 0; margin-bottom: 0;">';
+      } else if (resultCounter > 0) {
+        html += '<ul style="margin-top: 20px; margin-bottom: 0;">';
       }
+    }
+    if (indent > currentIndent) {
+      html += '<ul style="margin-top: 0; margin-bottom: 0;">';
+    } else if (indent < currentIndent) {
+      html += "</ul>".repeat((currentIndent - indent) / 2);
+    }
+    if (indent === 0) {
+      currentIndent = indent;
+      html += `<li>${content}</li>`;
+    } else {
+      currentIndent = indent;
+      html += `<li>${content}</li>`;
+    }
+  });
+  html += "</ul>";
+  html += "</ul>".repeat(currentIndent / 2); // Close any remaining unordered lists
+
+  return html;
+}
+
+// reference: https://github.com/solderq35/fg-time-calc/blob/main/index.js#L756
+function initPage() {
+  let queryIndex = window.location.href.indexOf("?");
+  let htmlIndex = window.location.href.indexOf(currentPage);
+  let params = window.location.href.substring(queryIndex + 1).split("&");
+  let baseUrl = "";
+  if (htmlIndex < 0) {
+    if (queryIndex < 0) {
+      baseUrl = window.location.href;
+    } else {
+      baseUrl = window.location.href.substring(0, queryIndex);
+    }
+  } else {
+    baseUrl = window.location.href.substring(0, htmlIndex);
+  }
+  if (htmlIndex < 0) {
+    document.getElementById("otherPage").href = baseUrl + otherPage;
+  } else {
+    document.getElementById("otherPage").href = baseUrl + otherPage + ".html";
+  }
+
+  for (i = 0; i < params.length; i++) {
+    param = params[i].split("=");
+    if (param[0] === "score") {
+      let num = param[1];
+      document.getElementById("score").value = String(num);
+    }
+    if (param[0] === "debugmode") {
+      document.getElementById("debugCheckbox").checked = true;
+    }
+  }
+}
+
+function clearFields() {
+  document.getElementById("score").value = "";
+  document.getElementById("debugCheckbox").checked = false;
+}
+
+function saveData() {
+  let score = parseFloat(
+    document.getElementById("score").value.replace(/,/g, "")
+  );
+  let debugState = document.getElementById("debugCheckbox").checked;
+  let baseUrl = "";
+  // reference for queryindex / baseUrl: https://github.com/solderq35/fg-time-calc/blob/main/index.js#L759
+  let queryIndex = window.location.href.indexOf("?");
+  if (queryIndex < 0) {
+    baseUrl = window.location.href;
+  } else {
+    baseUrl = window.location.href.substring(0, queryIndex);
+  }
+  let finalUrl = baseUrl;
+  let params = [];
+  if (score) {
+    params.push(`score=${score}`);
+  }
+  if (debugState) {
+    params.push("debugmode");
+  }
+  for (let i = 0; i < params.length; i++) {
+    if (i === 0) {
+      finalUrl += "?" + params[i];
+    } else {
+      finalUrl += "&" + params[i];
     }
   }
 
-  // This for loop generates an array of the possible millisecond input values
-  document.getElementById("totalordercost").value = seconds_input;
-  for (var m = 0; m <= 19; m++) {
-    ms_input_array[m] = Math.floor(seconds_input_array_whole[m] % 1000);
-  }
-
-  for (var i = 0; i < minutes_array.length; i++) {
-    // For loop to call the findTime function for all possible inputs.
-    for (var l = 0; l <= 19; l++) {
-      findTime(seconds_input_array[l], ms_input_array[l], output_div_array[l]);
-    }
-
-    /* Only show the possible calculated solution that is the same or 1 second more
-		than the time shown on rating screen (due to possible rounding errors)  */
-    for (var n = 0; n <= 19; n++) {
-      if (
-        Math.floor(parseFloat(minutes_array[i].value)) * 60 +
-          parseFloat(seconds_array[i].value) ==
-          Math.floor(seconds_input_array[n]) / 1 - 1 ||
-        Math.floor(parseFloat(minutes_array[i].value)) * 60 +
-          parseFloat(seconds_array[i].value) ==
-          Math.floor(seconds_input_array[n]) / 1 ||
-        Math.floor(parseFloat(minutes_array[i].value)) * 60 +
-          parseFloat(seconds_array[i].value) >
-          0
-      ) {
-        document.getElementById(output_div_array[n]).style.display = "block";
-      }
-    }
-
-    /* Do not show the possible calculated solutions that are either less than the time shown on rating
-		screeen, or at least 2 seconds more than the time shown on rating screen (due to possible rounding errors)*/
-    for (var o = 0; o <= 19; o++) {
-      if (
-        Math.floor(parseFloat(minutes_array[i].value)) * 60 +
-          parseFloat(seconds_array[i].value) <
-          Math.floor(seconds_input_array[o]) / 1 - 1 ||
-        Math.floor(parseFloat(minutes_array[i].value)) * 60 +
-          parseFloat(seconds_array[i].value) >
-          Math.floor(seconds_input_array[o]) / 1 ||
-        Math.floor(parseFloat(minutes_array[i].value)) * 60 +
-          parseFloat(seconds_array[i].value) <=
-          0
-      ) {
-        document.getElementById(output_div_array[o]).style.display = "none";
-      }
-    }
-  }
+  // Reference (cross platform clipboard copy): https://stackoverflow.com/a/71985515
+  const element = document.createElement("textarea");
+  element.value = finalUrl;
+  document.body.appendChild(element);
+  element.select();
+  document.execCommand("copy");
+  document.body.removeChild(element);
+  alert(`📋Copied to Clipboard: ${finalUrl}`);
 }
