@@ -97,11 +97,7 @@ function findTotal() {
         if (
           Math.floor(lower_bound_seconds) !== Math.floor(higher_bound_seconds)
         ) {
-          let debugCommand = "!debugtime " + score;
-          let debugTip =
-            "- Potential rounding error detected, for more info check `" +
-            debugCommand +
-            "`";
+          let debugTip = `<ul style="margin-top: 0; margin-bottom: 0;"><li>Potential rounding error detected, for more info click the <b>Debug Mode</b> checkbox</li></ul>`;
           result_array.push(debugTip);
         }
       } else if (debugState) {
@@ -125,12 +121,17 @@ function findTotal() {
       result_array.length === 0) &&
     score
   ) {
-    // may show up as weird characters on aws 3 test build: https://stackoverflow.com/questions/45949940/how-to-preserve-emoji-character-in-a-s3-file-with-node-js
+    // may show up as weird characters on aws 3 test build: https://stackoverflow.com/questions/22403071/text-files-uploaded-to-s3-are-encoded-strangely
     msgOutput = "Invalid Score 🥰";
     let error_output_string = msgOutput.toString();
     document.getElementById("time0").innerHTML = error_output_string;
   } else {
     let base_output_string = msgOutput.toString();
+    if (debugState) {
+      let debugInfo =
+        "M value = Completed SA bonuses (20k each) minus nontarget kills (5k each).<br />For more info, see below: <b>More Info on Time Calculation</b>";
+      base_output_string += debugInfo;
+    }
     document.getElementById("time0").innerHTML = base_output_string;
   }
 }

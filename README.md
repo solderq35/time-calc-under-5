@@ -35,11 +35,15 @@ Tool for calculating in-game time milliseconds for HITMAN level speedruns, **wit
 2.  For this example, let's use [this video](https://www.youtube.com/watch?v=zIRAmZdl-y4), which is an 8 second run of the "On Top of the World" Hitman level.
 3.  We can see that the end of this video that the score at the end of the video is `83,521`. As shown here: ![Score](static/goronscore.PNG)
 4.  Now, let's enter `83521` into the "Score" input field on the Milliseconds Calculator Site. ![Base Case](static/base_case.PNG)
-5.  Voila! As shown above, the exact millisecond time (8.981) is calculated and displayed immediately. Click on **More Info on Time Calculation** to get more insight on the mathematics behind this site.
-6.  If more accuracy is desired (e.g. to detect rounding errors), click the **Debug Mode** checkbox. Each link will take you to the exact calculation ([example for "margin of error" below](https://www.google.com/search?q=%280.5+*+100000+%2F+40000%29+*+%283+%2F+400%29)) via Google Search Query.
+5.  Voila! As you can see, the bot returns a few viable solutions. One of them (8.981) is within a second of the 8 seconds value shown on the rating screen, so this is the milliseconds value we are looking for. Click on **More Info on Time Calculation** to get more insight on the mathematics behind this site.
+6.  In case of rounding errors, you will get a warning, as shown below (example: `!time 204667`):
+
+![debug warning](static/debugwarning.png)
+
+7.  As prompted, click the **Debug Mode** checkbox. Each link will take you to the exact calculation ([example for "margin of error" below](https://www.google.com/search?q=%280.5+*+100000+%2F+40000%29+*+%283+%2F+400%29)) via Google Search Query.
     ![debug mode](static/debugcase.PNG)
-7.  You can also click on **Save Data as URL** to copy a URL to your clipboard that contains the score input you used and whether or not you had Debug Mode on.
-8.  A last option to consider is the **Calculator for 5 to 15 minutes** option, as the score-to-milliseconds formula changes after 5 minutes.
+8.  You can also click on **Save Data as URL** to copy a URL to your clipboard that contains the score input you used and whether or not you had Debug Mode on.
+9.  A last option to consider is the **Calculator for 5 to 15 minutes** option, as the score-to-milliseconds formula changes after 5 minutes.
 
 ### Mathematics/ Code Explanation
 
