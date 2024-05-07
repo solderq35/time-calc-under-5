@@ -33,10 +33,13 @@ Tool for calculating in-game time milliseconds for HITMAN level speedruns, **wit
 
 1.  Most video examples from [here](https://www.youtube.com/results?search_query=hitman+3+speedrun&sp=EgIYAQ%253D%253D) or [here](https://www.speedrun.com/hitman_3) will work for getting the right inputs if you have trouble finding applicable Hitman speedrun videos.
 2.  For this example, let's use [this video](https://www.youtube.com/watch?v=zIRAmZdl-y4), which is an 8 second run of the "On Top of the World" Hitman level.
-3.  We can see that the end of this video that the score at the end of the video is `83,521`. As shown here: ![Score](https://i.ibb.co/6v63rZm/goronscore.PNG)
-4.  Now, let's enter `83521` into the "Score" input field on the Milliseconds Calculator Site, and "8" into the "Seconds" field of the "Time Shown on Rating Screen" section, as shown:
-    ![Milliseconds Score](https://i.ibb.co/1sgZBZW/demo.png)
-5.  Voila! As shown above, the exact millisecond time (8.981) is calculated and displayed immediately. Click on "More Info on Time Calculation" to get more insight on the mathematics behind this site.
+3.  We can see that the end of this video that the score at the end of the video is `83,521`. As shown here: ![Score](static/goronscore.PNG)
+4.  Now, let's enter `83521` into the "Score" input field on the Milliseconds Calculator Site. ![Base Case](static/base_case.PNG)
+5.  Voila! As shown above, the exact millisecond time (8.981) is calculated and displayed immediately. Click on **More Info on Time Calculation** to get more insight on the mathematics behind this site.
+6.  If more accuracy is desired (e.g. to detect rounding errors), click the **Debug Mode** checkbox. Each link will take you to the exact calculation ([example for "margin of error" below](https://www.google.com/search?q=%280.5+*+100000+%2F+40000%29+*+%283+%2F+400%29)) via Google Search Query.
+    ![debug mode](static/debugcase.PNG)
+7.  You can also click on **Save Data as URL** to copy a URL to your clipboard that contains the score input you used and whether or not you had Debug Mode on.
+8.  A last option to consider is the **Calculator for 5 to 15 minutes** option, as the score-to-milliseconds formula changes after 5 minutes.
 
 ### Mathematics/ Code Explanation
 

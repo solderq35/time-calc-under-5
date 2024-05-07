@@ -23,55 +23,99 @@
       <h2 class="h_custom">
         HITMAN Milliseconds Time Calculator (Under 5 minutes)
       </h2>
+
       <p>
-        <strong class="p1">Score on Rating Screen</strong>
-        <br />
-        <b class="p2">
-          Calculation will not work if score is 0. No commas please!</b
-        >
-        <br />
-        <input onkeyup="findTotal()" type="text" id="score" name="printcost" />
-      </p>
-      <p>
-        <strong class="p1"
-          >Time Shown on Rating Screen (minutes:seconds)</strong
-        >
-        <br />
-        <b class="p2">
-          If either the minutes or seconds is zero, leave a "0" in that input
-          field.
-        </b>
-        <br />
+        <strong class="p1">Score on Rating Screen: </strong>
         <input
           onkeyup="findTotal()"
           type="text"
-          class="minutes"
-          name="timeminutes"
-          value="0"
-        />m
-        <input
-          onkeyup="findTotal()"
-          type="text"
-          class="seconds"
-          name="timeseconds"
-          value="0"
-        />s
+          id="score"
+          name="printcost"
+          placeholder="Enter a Score"
+          class="scoreInput"
+        />
       </p>
     </div>
     <div id="totalordercost"></div>
     <div id="totalordercost2"></div>
-    <strong class="p1">Time Calculation (minutes:seconds:milliseconds) </strong>
+    <strong class="p1">
+      Debug Mode
+      <input
+        type="checkbox"
+        id="debugCheckbox"
+        name="debug"
+        value="debug"
+        class="debugCheckbox"
+        onclick="findTotal()"
+      />
+    </strong>
+    <br />
+    <br />
+    <button type="button" class="saveButton" onClick="clearFields()">
+      Clear Fields
+      <!-- https://www.svgrepo.com/ -->
+      <svg
+        width="20px"
+        height="20px"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M9 9L15 15"
+          stroke="#000000"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M15 9L9 15"
+          stroke="#000000"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <circle
+          cx="12"
+          cy="12"
+          r="9"
+          stroke="#000000"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
+    <button type="button" class="saveButton" onClick="saveData()">
+      Save Data as URL
+      <!-- https://www.svgrepo.com/ -->
+      <svg
+        width="20px"
+        height="20px"
+        viewBox="0 0 48 48"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <title>share-arrow</title>
+        <g id="Layer_2" data-name="Layer 2">
+          <g id="invisible_box" data-name="invisible box">
+            <rect width="48" height="48" fill="none" />
+          </g>
+          <g id="Q3_icons" data-name="Q3 icons">
+            <path
+              d="M31.2,14.2,41,24.1l-9.8,9.8V26.8L27,27c-6.8.3-12,1-16.1,2.4,3.6-3.8,9.3-6.8,16.7-7.5l3.6-.3V14.2M28.3,6a1.2,1.2,0,0,0-1.1,1.3V17.9C12,19.4,2.2,29.8,2,40.3c0,.6.2,1,.6,1s.7-.3,1.1-1.1c2.4-5.4,7.8-8.5,23.5-9.2v9.7A1.2,1.2,0,0,0,28.3,42a.9.9,0,0,0,.8-.4L45.6,25.1a1.5,1.5,0,0,0,0-2L29.1,6.4a.9.9,0,0,0-.8-.4Z"
+            />
+          </g>
+        </g>
+      </svg>
+    </button>
+    <br />
+    <br />
+    <strong class="p1">Time Calculation (minutes:seconds.milliseconds) </strong>
+    <br />
     <br />
     <b class="p2">
-      In some cases the calculated result may be 1 second slower than what is
-      shown on rating screen.
-    </b>
-    <br />
-    <b class="p2">
-      If this happens, the time may be rounded to the next fastest second for
-      leaderboard purposes.
       <div id="time0" class="p3"></div>
-      <input type="checkbox" id="debug" name="debug" value="debug" />
+      <br />
       <button type="button" class="collapsible">
         More Info on Time Calculation (Click to Expand)
       </button>
@@ -275,13 +319,18 @@
           <a
             href="https://solderq35.github.io/time-calc-under-5/over5"
             class="p1"
+            id="fiveMinCalc"
             >Calculator for runs of 5 to 15 minutes</a
           >
           <br />
           <br />
-          <a href="https://solderq35.github.io/time-calc-under-5/sa" class="p1"
-            >Calculator for just SA runs (Less Inputs Needed)</a
-          >
+          <b class="p3">
+            <a
+              href="https://github.com/solderq35/time-calc-under-5/blob/main/README.md#usage-instructions-and-screenshots"
+              class="p1"
+              >Usage Instructions</a
+            >
+          </b>
           <br />
           <br />
           <b class="p3">

@@ -1,6 +1,8 @@
 body {
   font-family: Helvetica, Arial, sans-serif;
   font-size: 24px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 input[type="text"] {
@@ -38,7 +40,7 @@ li {
 }
 
 .p1 {
-  font-size: 25px;
+  font-size: 24px;
 }
 
 .p2 {
@@ -47,7 +49,7 @@ li {
 }
 
 .p3 {
-  font-size: 25px;
+  font-size: 24px;
   font-weight: normal;
 }
 
@@ -69,10 +71,6 @@ li {
   font-size: 30px;
 }
 
-.active,
-.collapsible:hover {
-}
-
 .content {
   border-color: red;
   border-width: 8px;
@@ -82,4 +80,30 @@ li {
   display: none;
   overflow: hidden;
   background-color: #f5f5dc;
+}
+
+.debugCheckbox {
+  width: 20px;
+  height: 20px;
+  position: relative;
+  vertical-align: middle;
+  margin-bottom: 7px; /* TODO: Adjust based on mobile dimensions? */
+}
+
+.p4 {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.saveButton {
+  height: 40px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.scoreInput {
+  width: 160px;
 }

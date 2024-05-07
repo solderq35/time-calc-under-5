@@ -1,71 +1,17 @@
-function findTime(seconds_input, ms_input, output_div) {
-  /*This function reformats the raw time inputs into minutes:seconds:milliseconds form, before printing the results
-	to the screen.*/
-
-  if (seconds_input % 60 > 10 && ms_input < 100 && ms_input >= 10) {
-    document.getElementById(output_div).innerHTML =
-      Math.floor(seconds_input / 60) +
-      ":" +
-      Math.floor((seconds_input % 60) / 1) +
-      ":" +
-      "0" +
-      ms_input;
-  }
-  if (seconds_input % 60 < 10 && ms_input < 100 && ms_input >= 10) {
-    document.getElementById(output_div).innerHTML =
-      Math.floor(seconds_input / 60) +
-      ":" +
-      "0" +
-      Math.floor((seconds_input % 60) / 1) +
-      ":" +
-      "0" +
-      ms_input;
-  }
-  if (seconds_input % 60 > 10 && ms_input < 10) {
-    document.getElementById(output_div).innerHTML =
-      Math.floor(seconds_input / 60) +
-      ":" +
-      Math.floor((seconds_input % 60) / 1) +
-      ":" +
-      "0" +
-      "0" +
-      ms_input;
-  }
-  if (seconds_input % 60 < 10 && ms_input < 10) {
-    document.getElementById(output_div).innerHTML =
-      Math.floor(seconds_input / 60) +
-      ":" +
-      "0" +
-      Math.floor((seconds_input % 60) / 1) +
-      ":" +
-      "0" +
-      "0" +
-      ms_input;
-  }
-  if (seconds_input % 60 > 10 && ms_input >= 100) {
-    document.getElementById(output_div).innerHTML =
-      Math.floor(seconds_input / 60) +
-      ":" +
-      Math.floor((seconds_input % 60) / 1) +
-      ":" +
-      ms_input;
-  }
-  if (seconds_input % 60 < 10 && ms_input >= 100) {
-    document.getElementById(output_div).innerHTML =
-      Math.floor(seconds_input / 60) +
-      ":" +
-      "0" +
-      Math.floor((seconds_input % 60) / 1) +
-      ":" +
-      ms_input;
-  }
-}
+// Global Constants (only difference between under5.js and over5.js). Maybe come back to refactor this better later.
+const currentPage = "index";
+const otherPage = "over5";
+const baseScore = 210000;
+const baseDivisor = 400;
+const lowerTimeBound = 0;
+const higherTimeBound = 300;
 
 function findTotal() {
-  let score = parseInt(document.getElementById("score").value);
-  let debug = document.getElementById("debug");
-  console.log(debug.checked);
-  // score = parseFloat(score.replace(/,/g, ""));
+  let score = parseFloat(
+    document.getElementById("score").value.replace(/,/g, "")
+  );
+  let debugState = document.getElementById("debugCheckbox").checked;
+  let resultCounter = 0;
 
   const result_array = [];
   // for all 20 possible M values
@@ -75,25 +21,25 @@ function findTotal() {
 
     // base result value (given in seconds:milliseconds. No rounding yet)
     let base_result =
-      (parseFloat(210000) - parseFloat((score * 100000) / base_M)) *
-      parseFloat(3 / 400);
+      (parseFloat(baseScore) - parseFloat((score * 100000) / base_M)) *
+      parseFloat(3 / baseDivisor);
 
     // error range (difference between upper bound ("base_result") and lower bound)
     let error_range_result =
-      parseFloat((0.5 * 100000) / base_M) * parseFloat(3 / 400);
+      parseFloat((0.5 * 100000) / base_M) * parseFloat(3 / baseDivisor);
 
     // lower bound result value (given in seconds:milliseconds. No rounding yet)
     let lower_bound_result =
-      (parseFloat(210000) - parseFloat(((score + 0.5) * 100000) / base_M)) *
-      parseFloat(3 / 400);
+      (parseFloat(baseScore) - parseFloat(((score + 0.5) * 100000) / base_M)) *
+      parseFloat(3 / baseDivisor);
 
     // higher bound result value (given in seconds:milliseconds. No rounding yet)
     let higher_bound_result =
-      (parseFloat(210000) - parseFloat(((score - 0.5) * 100000) / base_M)) *
-      parseFloat(3 / 400);
+      (parseFloat(baseScore) - parseFloat(((score - 0.5) * 100000) / base_M)) *
+      parseFloat(3 / baseDivisor);
 
-    // only calculate if the base result value is within bounds of 0 - 5 minutes
-    if (base_result > 0 && base_result < 300) {
+    // only calculate if the base result value is within bounds of possible values
+    if (base_result >= lowerTimeBound && base_result < higherTimeBound) {
       let formatted_result = formatTime(base_result).formatted_result;
       let formatted_lower_bound =
         formatTime(lower_bound_result).formatted_result;
@@ -125,57 +71,63 @@ function findTotal() {
           formatted_error_range = "0." + error_range_milliseconds;
         }
       }
-      let debug_result = `- Original Time Calc: [${formatted_result}](<https://www.google.com/search?q=%28210000+-+%28${parseFloat(
-        score
-      )}+*+100000+%2F+${base_M}%29%29+*+%283+%2F+400%29>)<n>  - Time Calc Error Range: ([${formatted_lower_bound}](<https://www.google.com/search?q=%28210000+-+%28${parseFloat(
-        score + 0.5
-      )}+*+100000+%2F+${base_M}%29%29+*+%283+%2F+400%29>), [${formatted_higher_bound}](<https://www.google.com/search?q=%28210000+-+%28${parseFloat(
-        score - 0.5
-      )}+*+100000+%2F+${base_M}%29%29+*+%283+%2F+400%29>)]<n>  - Margin of Error (Seconds): ± [${formatted_error_range}](<https://www.google.com/search?q=%280.5+*+100000+%2F+${base_M}%29+*+%283+%2F+400%29>)<n>  - M value: ${base_M}`;
 
-      result_array.push(formatted_result);
-      if (
-        Math.floor(lower_bound_seconds) !== Math.floor(higher_bound_seconds)
-      ) {
-        let debugCommand = "!debugtime " + score;
-        let debugTip =
-          "- Potential rounding error detected, for more info check `" +
-          debugCommand +
-          "`";
-        result_array.push(debugTip);
+      // Exact string from timmy bot for future reference, use functions above to transform to properly nested html
+      // bullets + link support.
+      const markdownString = `- Original Time Calc: [${formatted_result}](<https://www.google.com/search?q=%28${baseScore}+-+%28${parseFloat(
+        score
+      )}+*+100000+%2F+${base_M}%29%29+*+%283+%2F+${baseDivisor}%29>)\n  - Time Calc Error Range: ([${formatted_lower_bound}](<https://www.google.com/search?q=%28${baseScore}+-+%28${parseFloat(
+        score + 0.5
+      )}+*+100000+%2F+${base_M}%29%29+*+%283+%2F+${baseDivisor}%29>), [${formatted_higher_bound}](<https://www.google.com/search?q=%28${baseScore}+-+%28${parseFloat(
+        score - 0.5
+      )}+*+100000+%2F+${base_M}%29%29+*+%283+%2F+${baseDivisor}%29>)]\n  - Margin of Error (Seconds): ± [${formatted_error_range}](<https://www.google.com/search?q=%280.5+*+100000+%2F+${base_M}%29+*+%283+%2F+${baseDivisor}%29>)\n  - M value: ${base_M}`;
+
+      const htmlOutput = markdownToHtml(
+        markdownLinkRegex(discordLinkRegex(markdownString)),
+        resultCounter
+      );
+
+      let debug_result = htmlOutput;
+
+      if (!debugState) {
+        result_array.push(formatted_result);
+        if (
+          Math.floor(lower_bound_seconds) !== Math.floor(higher_bound_seconds)
+        ) {
+          let debugCommand = "!debugtime " + score;
+          let debugTip =
+            "- Potential rounding error detected, for more info check `" +
+            debugCommand +
+            "`";
+          result_array.push(debugTip);
+        }
+      } else if (debugState) {
+        result_array.push(debug_result);
       }
+      resultCounter += 1; // only increment for results in range (0 to 5 minutes)
     }
   }
 
-  let msgOutput = result_array.join("<br />");
+  let msgOutput = debugState
+    ? result_array.join("")
+    : result_array.join("<br />");
 
   // regex for input validation (only numeric input accepted)
-  console.log(score);
   let num_hyphen_check = /^[0-9]*$/;
-  console.log(num_hyphen_check.test(score));
-  console.log(result_array);
   if (
-    num_hyphen_check.test(score) == false ||
-    score > 210000 ||
-    score < 5000 ||
-    // if no numbers were returned in range (0 to 5 minutes), it's a bad input
-    result_array.length === 0
+    (num_hyphen_check.test(score) == false ||
+      score > baseScore ||
+      score < 5000 ||
+      // if no numbers were returned in range (0 to 5 minutes), it's a bad input
+      result_array.length === 0) &&
+    score
   ) {
-    msgOutput = "Invalid Score :smiling_face_with_3_hearts:";
+    msgOutput = "Invalid Score 🥰";
     let error_output_string = msgOutput.toString();
     document.getElementById("time0").innerHTML = error_output_string;
   } else {
-    //console.log(score);
-    console.log(msgOutput);
     let base_output_string = msgOutput.toString();
     document.getElementById("time0").innerHTML = base_output_string;
-    /*
-      for (let i = 0; i < 20; i++) {
-        if (result_array[i]) {
-          document.getElementById(`time${i}`).innerHTML = String(result_array[i]);
-        }
-      }
-      */
   }
 }
 
@@ -215,19 +167,123 @@ function formatTime(base_result) {
   return { seconds, formatted_result };
 }
 
+function discordLinkRegex(markdown) {
+  const linkRegex = /\[([^\]]+)\]\(<([^>]+)>\)/g; // Regex for matching Markdown links with <>
+  return markdown.replace(linkRegex, '<a href="$2">$1</a>');
+}
+function markdownLinkRegex(markdown) {
+  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g; // Regex for matching Markdown links
+  return markdown.replace(linkRegex, '<a href="$2">$1</a>');
+}
+function markdownToHtml(markdown, resultCounter) {
+  const lines = markdown.split("\n");
+  let html = "";
+  let currentIndent = 0;
+
+  lines.forEach((line) => {
+    const indent = line.search(/\S/);
+    if (indent === -1) return; // Skip empty lines
+    const bulletCount = Math.floor(indent / 2) + 1;
+    const content = line.trim().substring(bulletCount * 2 - indent);
+    if (indent === 0) {
+      if (resultCounter === 0) {
+        html += '<ul style="margin-top: 0; margin-bottom: 0;">';
+      } else if (resultCounter > 0) {
+        html += '<ul style="margin-top: 20px; margin-bottom: 0;">';
+      }
+    }
+    if (indent > currentIndent) {
+      html += '<ul style="margin-top: 0; margin-bottom: 0;">';
+    } else if (indent < currentIndent) {
+      html += "</ul>".repeat((currentIndent - indent) / 2);
+    }
+    if (indent === 0) {
+      currentIndent = indent;
+      html += `<li>${content}</li>`;
+    } else {
+      currentIndent = indent;
+      html += `<li>${content}</li>`;
+    }
+  });
+  html += "</ul>";
+  html += "</ul>".repeat(currentIndent / 2); // Close any remaining unordered lists
+
+  return html;
+}
+
 // reference: https://github.com/solderq35/fg-time-calc/blob/main/index.js#L756
 function initPage() {
   let queryIndex = window.location.href.indexOf("?");
+  let htmlIndex = window.location.href.indexOf(currentPage);
   let params = window.location.href.substring(queryIndex + 1).split("&");
-  console.log(queryIndex);
-  console.log(params);
+  let baseUrl = "";
+  if (htmlIndex < 0) {
+    if (queryIndex < 0) {
+      baseUrl = window.location.href;
+    } else {
+      baseUrl = window.location.href.substring(0, queryIndex);
+    }
+  } else {
+    baseUrl = window.location.href.substring(0, htmlIndex);
+  }
+  if (htmlIndex < 0) {
+    document.getElementById("fiveMinCalc").href = baseUrl + otherPage;
+  } else {
+    document.getElementById("fiveMinCalc").href = baseUrl + otherPage + ".html";
+  }
+
   for (i = 0; i < params.length; i++) {
     param = params[i].split("=");
-    console.log(param);
     if (param[0] === "score") {
       let num = param[1];
-      console.log(num);
       document.getElementById("score").value = String(num);
     }
+    if (param[0] === "debugmode") {
+      document.getElementById("debugCheckbox").checked = true;
+    }
   }
+}
+
+function clearFields() {
+  document.getElementById("score").value = "";
+  document.getElementById("debugCheckbox").checked = false;
+}
+
+function saveData() {
+  let score = parseFloat(
+    document.getElementById("score").value.replace(/,/g, "")
+  );
+  let debugState = document.getElementById("debugCheckbox").checked;
+  let baseUrl = "";
+  // reference for queryindex / baseUrl: https://github.com/solderq35/fg-time-calc/blob/main/index.js#L759
+  let queryIndex = window.location.href.indexOf("?");
+  if (queryIndex < 0) {
+    baseUrl = window.location.href;
+  } else {
+    baseUrl = window.location.href.substring(0, queryIndex);
+  }
+  let finalUrl = baseUrl;
+  let params = [];
+  if (score) {
+    params.push(`score=${score}`);
+  }
+  if (debugState) {
+    params.push("debugmode");
+  }
+  for (let i = 0; i < params.length; i++) {
+    if (i === 0) {
+      finalUrl += "?" + params[i];
+    } else {
+      finalUrl += "&" + params[i];
+    }
+  }
+
+  // Reference (cross platform clipboard copy): https://stackoverflow.com/a/71985515
+  const element = document.createElement("textarea");
+  element.value = finalUrl;
+  document.body.appendChild(element);
+  element.select();
+  document.execCommand("copy");
+  document.body.removeChild(element);
+  alert(`📋Copied to Clipboard: ${finalUrl}`);
 }
