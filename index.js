@@ -234,9 +234,6 @@ function initPage(pageFlag) {
   }
   const currentPage = over5Flag ? "over5" : "index";
   const otherPage = over5Flag ? "index" : "over5";
-  const metaDescription = over5Flag
-    ? "For Runs of 5 to 15 Minutes"
-    : "For Runs Under 5 Minutes";
   const titleHeaderText = over5Flag
     ? "HITMAN Milliseconds Time Calculator (5 to 15 Minutes)"
     : "HITMAN Milliseconds Time Calculator (Under 5 Minutes)";
@@ -245,9 +242,6 @@ function initPage(pageFlag) {
     : "Calculator for Runs of 5 to 15 Minutes";
 
   // Initialize any differing HTML elements for "Under 5 (index)" vs "5 to 15 Minutes (over5)" pages
-  document
-    .querySelector('meta[property="og:description"]')
-    .setAttribute("content", metaDescription);
   document.title = titleHeaderText;
   document.getElementById("titleHeader").textContent = titleHeaderText;
   document.getElementById("otherPage").text = otherPageLinkText;
