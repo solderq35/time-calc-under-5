@@ -1,3 +1,6 @@
+<!-- Do a Find and Replace for 'index' vs 'over5' for findTotal() and initPage() function inputs, that's the 
+  only difference between index.html and over5.html -->
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -6,28 +9,25 @@
       rel="icon"
       href="https://img.icons8.com/color/344/calculator--v1.png"
     />
-    <script src="under5.js"></script>
+    <script src="index.js"></script>
     <meta property="og:title" content="Hitman Milliseconds Time Calculator" />
-    <meta
-      property="og:description"
-      content="Calculate Milliseconds for Runs under 5 Minutes"
-    />
+    <meta property="og:description" content="" />
     <meta
       property="og:image"
       content="https://img.icons8.com/color/344/calculator--v1.png"
     />
   </head>
-  <body onLoad="return (initPage(), findTotal())">
-    <title>HITMAN Milliseconds Time Calculator (Under 5 minutes)</title>
+  <body onLoad="return (initPage('index'), findTotal('index'))">
+    <title>HITMAN Milliseconds Time Calculator</title>
     <div class="test">
-      <h2 class="h_custom">
-        HITMAN Milliseconds Time Calculator (Under 5 minutes)
+      <h2 class="h_custom" id="titleHeader">
+        HITMAN Milliseconds Time Calculator
       </h2>
 
       <p>
         <strong class="p1">Score on Rating Screen: </strong>
         <input
-          onkeyup="findTotal()"
+          onkeyup="findTotal('index')"
           type="text"
           id="score"
           name="printcost"
@@ -46,7 +46,7 @@
         name="debug"
         value="debug"
         class="debugCheckbox"
-        onclick="findTotal()"
+        onclick="findTotal('index')"
       />
     </strong>
     <br />
@@ -316,10 +316,7 @@
       </div>
       <div class="BioDiv">
         <p>
-          <a
-            href="https://solderq35.github.io/time-calc-under-5/over5"
-            class="p1"
-            id="otherPage"
+          <a href="" class="p1" id="otherPage"
             >Calculator for runs of 5 to 15 minutes</a
           >
           <br />
