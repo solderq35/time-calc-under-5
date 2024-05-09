@@ -1,12 +1,15 @@
-// Global Constants (only difference between under5.js and over5.js). Maybe come back to refactor this better later.
-const currentPage = "over5";
-const otherPage = "index";
-const baseScore = 175000;
-const baseDivisor = 50;
-const lowerTimeBound = 300;
-const higherTimeBound = 1500;
+// See pageFlag variable (will either be 'index' or 'over5') for different behavior for index.html vs over5.html pages
+// pageFlag variable is an input of findTotal() and initPage() functions
 
-function findTotal() {
+function findTotal(pageFlag) {
+  let over5Flag = false;
+  if (pageFlag === "over5") {
+    over5Flag = true;
+  }
+  const baseScore = over5Flag ? 175000 : 210000;
+  const baseDivisor = over5Flag ? 50 : 400;
+  const lowerTimeBound = over5Flag ? 300 : 0;
+  const higherTimeBound = over5Flag ? 1500 : 300;
   let score = parseFloat(
     document.getElementById("score").value.replace(/,/g, "")
   );
@@ -224,21 +227,54 @@ function markdownToHtml(markdown, resultCounter) {
 }
 
 // reference: https://github.com/solderq35/fg-time-calc/blob/main/index.js#L756
-function initPage() {
+function initPage(pageFlag) {
+  let over5Flag = false;
+  if (pageFlag === "over5") {
+    over5Flag = true;
+  }
+  const currentPage = over5Flag ? "over5" : "index";
+  const otherPage = over5Flag ? "index" : "over5";
+  const metaDescription = over5Flag
+    ? "For Runs of 5 to 15 Minutes"
+    : "For Runs Under 5 Minutes";
+  const titleHeaderText = over5Flag
+    ? "HITMAN Milliseconds Time Calculator (5 to 15 Minutes)"
+    : "HITMAN Milliseconds Time Calculator (Under 5 Minutes)";
+  const otherPageLinkText = over5Flag
+    ? "Calculator for Runs of Under 5 Minutes"
+    : "Calculator for Runs of 5 to 15 Minutes";
+
+  // Initialize any differing HTML elements for "Under 5 (index)" vs "5 to 15 Minutes (over5)" pages
+  document
+    .querySelector('meta[property="og:description"]')
+    .setAttribute("content", metaDescription);
+  document.title = titleHeaderText;
+  document.getElementById("titleHeader").textContent = titleHeaderText;
+  document.getElementById("otherPage").text = otherPageLinkText;
+
   let queryIndex = window.location.href.indexOf("?");
-  let htmlIndex = window.location.href.indexOf(currentPage);
+  let currentPageIndex = window.location.href.indexOf(currentPage);
+  let htmlIndex = window.location.href.indexOf(".html");
+  let httpsIndex = window.location.href.indexOf("https");
   let params = window.location.href.substring(queryIndex + 1).split("&");
   let baseUrl = "";
-  if (htmlIndex < 0) {
+  if (currentPageIndex < 0) {
     if (queryIndex < 0) {
       baseUrl = window.location.href;
     } else {
       baseUrl = window.location.href.substring(0, queryIndex);
     }
   } else {
-    baseUrl = window.location.href.substring(0, htmlIndex);
+    baseUrl = window.location.href.substring(0, currentPageIndex);
   }
-  if (htmlIndex < 0) {
+
+  // current s3 test deployment URL is one of these 2:
+  // http://time-calc-under-5.s3-website-us-west-2.amazonaws.com/
+  // https://time-calc-under-5.s3.us-west-2.amazonaws.com/index.html
+
+  // Checking for both ".html" not being in the URL, and for "https" being in the URL
+  // enforces intended behavior for the S3 test deployment
+  if (htmlIndex < 0 && httpsIndex >= 0) {
     document.getElementById("otherPage").href = baseUrl + otherPage;
   } else {
     document.getElementById("otherPage").href = baseUrl + otherPage + ".html";
