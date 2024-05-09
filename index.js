@@ -258,7 +258,6 @@ function initPage(pageFlag) {
   let httpsIndex = window.location.href.indexOf("https");
   let params = window.location.href.substring(queryIndex + 1).split("&");
   let baseUrl = "";
-  console.log(currentPageIndex);
   if (currentPageIndex < 0) {
     if (queryIndex < 0) {
       baseUrl = window.location.href;
