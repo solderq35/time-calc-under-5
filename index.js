@@ -245,7 +245,7 @@ function initPage(pageFlag) {
     : "Calculator for Runs of 5 to 15 Minutes";
 
   // Initialize any differing HTML elements for "Under 5 (index)" vs "5 to 15 Minutes (over5)" pages
-  $('meta[property=og\\:description]').attr('content', metaDescription);
+  $("meta[property=og\\:description]").attr("content", metaDescription);
   document.title = titleHeaderText;
   document.getElementById("titleHeader").textContent = titleHeaderText;
   document.getElementById("otherPage").text = otherPageLinkText;
