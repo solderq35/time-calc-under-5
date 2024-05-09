@@ -262,16 +262,19 @@ function initPage(pageFlag) {
     baseUrl = window.location.href.substring(0, currentPageIndex);
   }
 
-  // current s3 test deployment URL is one of these 2:
-  // http://time-calc-under-5.s3-website-us-west-2.amazonaws.com/
-  // https://time-calc-under-5.s3.us-west-2.amazonaws.com/index.html
-
-  // Checking for both ".html" not being in the URL, and for "https" being in the URL
-  // enforces intended behavior for the S3 test deployment
   if (htmlIndex < 0 && httpsIndex >= 0) {
-    document.getElementById("otherPage").href = baseUrl + otherPage;
+    // If ("https" in URL) + (no ".html" in URL) + (over5Flag is true), then set "otherPage" link to point to index ("/")
+    document.getElementById("otherPage").href = over5Flag
+      ? baseUrl
+      : baseUrl + otherPage;
   } else {
+    // If (no "https" in URL) or (no ".html" in URL), then enforce ".html" file extension in "otherPage" links
+    // Intended to handle local dev / preview s3 use cases
     document.getElementById("otherPage").href = baseUrl + otherPage + ".html";
+
+    // for context, current s3 test deployment URL is one of these 2:
+    // http://time-calc-under-5.s3-website-us-west-2.amazonaws.com/
+    // https://time-calc-under-5.s3.us-west-2.amazonaws.com/index.html
   }
 
   for (i = 0; i < params.length; i++) {
