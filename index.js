@@ -96,7 +96,7 @@ function findTotal(pageFlag) {
       let debug_result = htmlOutput;
 
       if (!debugState) {
-        result_array.push(formatted_result);
+        result_array.push(`${formatted_result} <button class="copyMs" data-ms="${formatted_result}" style="margin-left : 10px; position : relative; top: -3px;">Copy MS</button>`);
         if (
           Math.floor(lower_bound_seconds) !== Math.floor(higher_bound_seconds)
         ) {
@@ -141,6 +141,16 @@ function findTotal(pageFlag) {
       base_output_string += debugInfo;
     }
     document.getElementById("time0").innerHTML = base_output_string;
+
+    document.querySelectorAll(".copyMs").forEach(btn => {
+      btn.addEventListener("click", e => {
+        const msData = e.target.getAttribute("data-ms");
+        let ms = msData.substring(msData.indexOf('.') + 1);
+        navigator.clipboard.writeText(ms);
+        btn.textContent = "Copied";
+        setTimeout(() => (btn.textContent = "Copy MS"), 1000);
+      });
+    });
   }
 }
 
